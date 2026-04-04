@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operation Dragon Scroll</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&f[]=jet-brains-mono@400,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="#" class="logo">
+      <svg class="logo-mark" viewBox="0 0 36 36" fill="none">
+        <circle cx="18" cy="18" r="4" fill="currentColor"/>
+        <path d="M18 4 L20 14 L18 14 L16 14 Z" fill="currentColor" opacity="0.9"/>
+        <path d="M32 18 L22 20 L22 18 L22 16 Z" fill="currentColor" opacity="0.9"/>
+        <path d="M18 32 L16 22 L18 22 L20 22 Z" fill="currentColor" opacity="0.9"/>
+        <path d="M4 18 L14 16 L14 18 L14 20 Z" fill="currentColor" opacity="0.9"/>
+        <path d="M7 7 L14.5 15.5 L13.1 14.1 L11.8 15.4 Z" fill="currentColor" opacity="0.6"/>
+        <path d="M29 7 L21.5 14.5 L22.9 15.9 L24.2 14.6 Z" fill="currentColor" opacity="0.6"/>
+        <path d="M29 29 L21.5 21.5 L22.9 20.1 L24.2 21.4 Z" fill="currentColor" opacity="0.6"/>
+        <path d="M7 29 L14.5 21.5 L13.1 20.1 L11.8 21.4 Z" fill="currentColor" opacity="0.6"/>
+      </svg>
+      <span class="logo-text">White <span>Lotus</span></span>
+    </a>
+    <div class="header-actions">
+      <span class="phase-badge">PHASE 1</span>
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="mission-banner">
+    <div class="mission-label">⚠ Secret Message Transmission — Classified</div>
+    <h1 class="mission-title">Operation Dragon Scroll</h1>
+    <p class="mission-desc">
+      White Lotus has sent you an encrypted message.
+      Use <strong>word frequency</strong> to crack the letter map,
+      then read the hidden <strong>keyword</strong> from your cipher alphabet.
+    </p>
+  </div>
+
+  <!-- MAIN: two wide columns -->
+  <div class="main-container">
+
+    <!-- LEFT -->
+    <div class="left-col">
+
+      <!-- Ciphertext -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title"><span class="dot"></span>Encrypted Message</span>
+          <span class="panel-tag">FULLY ENCRYPTED</span>
+        </div>
+        <div class="panel-body">
+          <p class="cipher-text" id="ciphertext-display"></p>
+        </div>
+      </div>
+
+      <!-- Decoded Output -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title"><span class="dot"></span>Decrypted Message</span>
+          <span class="panel-tag" id="decode-status-label">AWAITING MAP…</span>
+        </div>
+        <div class="panel-body">
+          <p class="decoded-text" id="decoded-display">Fill in the mapping grid — correctly decoded letters appear here…</p>
+        </div>
+        <div class="status-bar">
+          <span class="status-dot idle" id="status-dot"></span>
+          <span class="status-msg" id="status-msg">Waiting for mappings…</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right-col">
+
+      <!-- Step 1: Word Frequency (collapsible) -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title"><span class="dot dot-gold"></span>Word Frequency</span>
+          <button class="shuriken-toggle" id="freq-toggle" aria-expanded="false" aria-label="Reveal frequency table">
+            <svg class="shuriken-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 2 L18 13 L16 16 L14 13 Z" fill="currentColor"/>
+              <path d="M30 16 L19 18 L16 16 L19 14 Z" fill="currentColor"/>
+              <path d="M16 30 L14 19 L16 16 L18 19 Z" fill="currentColor"/>
+              <path d="M2 16 L13 14 L16 16 L13 18 Z" fill="currentColor"/>
+              <circle cx="16" cy="16" r="2.5" fill="currentColor"/>
+            </svg>
+            <span class="shuriken-label" id="freq-toggle-label">Reveal Intel</span>
+          </button>
+        </div>
+        <div class="freq-body" id="freq-body" style="display:none;">
+          <div class="panel-body">
+            <p class="step-desc">
+              The most common short English words are
+              <strong>IS, IT, TO, IS, ON, AT, DO, THE, NOT</strong>. The most common words in the 
+              encrypted message are given below with their corresponding frequencies.
+            </p>
+            <table class="freq-table" id="freq-table"></table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Mapping Grid -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title"><span class="dot"></span>Decryption Map</span>
+          <span class="panel-tag" id="mapping-progress">0 / 26 correct</span>
+        </div>
+        <div class="panel-body">
+          <p class="step-desc">
+            For each <span class="cipher-label-eg">cipher letter</span> (top),
+            type the plain letter it decodes to.
+            <span style="color:#6dbf67;font-weight:700;">Green</span> = correct,
+            <span style="color:var(--color-primary);font-weight:700;">red</span> = wrong.
+          </p>
+          <div class="mapping-grid" id="mapping-grid"></div>
+        </div>
+      </div>
+
+      <!-- Step 3: Keyword Reveal -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title"><span class="dot dot-gold"></span>Reveal the Keyword</span>
+          <span class="panel-tag" id="keyword-panel-tag">LOCKED</span>
+        </div>
+        <div class="panel-body">
+          <p class="step-desc">
+            The first letters in your <strong>Cipher row</strong> that appear
+            <em>out of alphabetical order</em> spell the secret keyword.
+            Type it below to confirm.
+          </p>
+          <div class="cipher-alpha-preview">
+            <div class="alpha-row-label">Plain  →</div>
+            <div class="alpha-row" id="alpha-plain-row"></div>
+            <div class="alpha-row-label">Cipher →</div>
+            <div class="alpha-row" id="alpha-cipher-row"></div>
+          </div>
+          <div class="input-group" style="margin-top:var(--space-4);">
+            <label class="input-label" for="keyword-input">Keyword</label>
+            <input type="text" id="keyword-input" class="keyword-input"
+              placeholder="Type the keyword…" maxlength="20"
+              autocomplete="off" autocorrect="off" spellcheck="false" />
+            <p class="keyword-status" id="keyword-status"></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HINTS + SUBMIT -->
+  <div class="bottom-section">
+    <div class="hint-row">
+      <button class="hint-btn" id="hint-btn-1">🗡 Hint 1</button>
+      <button class="hint-btn" id="hint-btn-2">🗡 Hint 2</button>
+      <button class="hint-btn" id="hint-btn-3">🗡 Hint 3</button>
+    </div>
+    <p class="hint-display" id="hint-display"></p>
+    <button class="submit-btn" id="submit-btn" disabled>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Confirm Decode
+    </button>
+    <div class="result-card" id="result-card" style="display:none;">
+      <div class="result-icon" id="result-icon"></div>
+      <h2 class="result-title" id="result-title"></h2>
+      <p class="result-msg" id="result-msg"></p>
+      <button class="retry-btn" id="retry-btn">Try Again</button>
+    </div>
+  </div>
+
+  <div class="confetti-container" id="confetti-container"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>
