@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operation Bamboo Collision</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&f[]=jet-brains-mono@400,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="hash-collision-style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a href="#" class="logo">
+      <svg class="logo-mark" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <circle cx="18" cy="18" r="4" fill="currentColor"/>
+        <path d="M18 4 L20 14 L18 14 L16 14 Z" fill="currentColor" opacity="0.9"/>
+        <path d="M32 18 L22 20 L22 18 L22 16 Z" fill="currentColor" opacity="0.9"/>
+        <path d="M18 32 L16 22 L18 22 L20 22 Z" fill="currentColor" opacity="0.9"/>
+        <path d="M4 18 L14 16 L14 18 L14 20 Z" fill="currentColor" opacity="0.9"/>
+        <path d="M7 7 L14.5 15.5 L13.1 14.1 L11.8 15.4 Z" fill="currentColor" opacity="0.6"/>
+        <path d="M29 7 L21.5 14.5 L22.9 15.9 L24.2 14.6 Z" fill="currentColor" opacity="0.6"/>
+        <path d="M29 29 L21.5 21.5 L22.9 20.1 L24.2 21.4 Z" fill="currentColor" opacity="0.6"/>
+        <path d="M7 29 L14.5 21.5 L13.1 20.1 L11.8 21.4 Z" fill="currentColor" opacity="0.6"/>
+      </svg>
+      <span class="logo-text">White <span>Lotus</span></span>
+    </a>
+    <div class="header-actions">
+      <span class="phase-badge">PHASE 2</span>
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <section class="mission-banner">
+    <div class="mission-label">⚠ Hash Verification Exercise — Classified</div>
+    <h1 class="mission-title">Operation Bamboo Collision</h1>
+    <p class="mission-desc">
+      The message is already readable. Change <strong>only the address</strong>, create a different message,
+      and keep the <strong>same hash</strong> as the original transmission.
+    </p>
+  </section>
+
+  <main class="page-wrap">
+    <section class="panel">
+      <div class="panel-header">
+        <span class="panel-title"><span class="dot"></span>Mission Scroll</span>
+        <span class="panel-tag">ADDRESS FIELD EDITABLE</span>
+      </div>
+      <div class="panel-body">
+        <p class="step-desc">
+          Edit only the highlighted address. The forged message must point to <strong>Bamboo Street</strong>,
+          but the final hash must still match the original transmission.
+        </p>
+        <article class="scroll-card">
+          <p class="scroll-text">
+            White Lotus courier note.<br><br>
+            Move the decoy scroll before sunset. Shadow Claw scouts are tracking the western route.
+            Carry the false scroll to
+            <input
+              id="address-input"
+              class="address-input"
+              type="text"
+              value="11 Lotus Alley"
+              aria-label="Editable address"
+              autocomplete="off"
+              autocorrect="off"
+              spellcheck="false"
+            />
+            and leave it under the red gate lantern. Travel alone, speak to no one, and destroy this note after delivery.
+          </p>
+        </article>
+        <div class="mini-note">
+          <span class="mini-dot"></span>
+          Only letters and digits affect the hash. Spaces and punctuation are ignored.
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <span class="panel-title"><span class="dot dot-gold"></span>Hash Console</span>
+        <span class="panel-tag" id="status-pill">AWAITING COLLISION</span>
+      </div>
+      <div class="panel-body">
+        <div class="hash-grid">
+          <div class="hash-card rule-card">
+            <div class="hash-label">Toy Hash Rule</div>
+            <p class="rule-text">
+              Convert letters with <strong>A=1, B=2, …, Z=26</strong>.<br>
+              Add digits as themselves.<br>
+              Ignore spaces and punctuation.<br>
+              Keep only the <strong>last two digits</strong>.
+            </p>
+            <div class="formula">hash(message) = total mod 100</div>
+          </div>
+
+          <div class="hash-card">
+            <div class="hash-label">Original Transmission Hash</div>
+            <div class="hash-value" id="original-hash">00</div>
+            <div class="hash-subtext">This value must stay the same.</div>
+          </div>
+
+          <div class="hash-card current-card">
+            <div class="hash-label">Live Forged Hash</div>
+            <div class="hash-value" id="current-hash">00</div>
+            <div class="hash-subtext" id="current-hash-text">Edit the address to begin.</div>
+          </div>
+
+          <div class="hash-card collision-card">
+            <div class="hash-label">Collision Check</div>
+            <div class="collision-readout" id="collision-readout">No collision yet.</div>
+            <div class="hash-subtext" id="collision-subtext">The message must change and the hash must still match.</div>
+          </div>
+        </div>
+      </div>
+      <div class="status-bar">
+        <span class="status-dot idle" id="status-dot"></span>
+        <span class="status-msg" id="status-msg">Edit the address and watch the live hash.</span>
+      </div>
+    </section>
+
+    <section class="bottom-section">
+      <div class="hint-row">
+        <button class="hint-btn" id="hint-btn-1">🗡 Hint 1</button>
+        <button class="hint-btn" id="hint-btn-2">🗡 Hint 2</button>
+        <button class="hint-btn" id="hint-btn-3">🗡 Hint 3</button>
+      </div>
+      <p class="hint-display" id="hint-display"></p>
+
+      <button class="submit-btn" id="submit-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        Submit Collided Message
+      </button>
+
+      <div class="result-card" id="result-card" style="display:none;">
+        <div class="result-icon" id="result-icon"></div>
+        <h2 class="result-title" id="result-title"></h2>
+        <p class="result-msg" id="result-msg"></p>
+        <button class="retry-btn" id="retry-btn">Keep Editing</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="confetti-container" id="confetti-container"></div>
+  <script src="hash-collision-script.js" defer></script>
+</body>
+</html>
