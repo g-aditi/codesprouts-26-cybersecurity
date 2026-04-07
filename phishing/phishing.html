@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operation Shadow Ink</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&f[]=jet-brains-mono@400,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="phishing-style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="#" class="logo">
+      <svg class="logo-mark" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <circle cx="18" cy="18" r="4" fill="currentColor"/>
+        <path d="M18 4 L20 14 L18 14 L16 14 Z" fill="currentColor" opacity="0.9"/>
+        <path d="M32 18 L22 20 L22 18 L22 16 Z" fill="currentColor" opacity="0.9"/>
+        <path d="M18 32 L16 22 L18 22 L20 22 Z" fill="currentColor" opacity="0.9"/>
+        <path d="M4 18 L14 16 L14 18 L14 20 Z" fill="currentColor" opacity="0.9"/>
+        <path d="M7 7 L14.5 15.5 L13.1 14.1 L11.8 15.4 Z" fill="currentColor" opacity="0.6"/>
+        <path d="M29 7 L21.5 14.5 L22.9 15.9 L24.2 14.6 Z" fill="currentColor" opacity="0.6"/>
+        <path d="M29 29 L21.5 21.5 L22.9 20.1 L24.2 21.4 Z" fill="currentColor" opacity="0.6"/>
+        <path d="M7 29 L14.5 21.5 L13.1 20.1 L11.8 21.4 Z" fill="currentColor" opacity="0.6"/>
+      </svg>
+      <span class="logo-text">White <span>Lotus</span></span>
+    </a>
+    <div class="header-actions">
+      <span class="phase-badge">PHASE 2</span>
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <section class="mission-banner">
+    <div class="mission-label">✦ Social Engineering Exercise — Classified</div>
+    <h1 class="mission-title">Operation Shadow Ink</h1>
+    <p class="mission-desc">
+      Impersonate <strong>Red Fang</strong> via email — redirecting SC raiders to Yin Vault.
+      Choose sender, recipient, and subject carefully, then craft the body using
+      <strong>real phishing patterns</strong> to fool the spam classifier.
+    </p>
+  </section>
+
+  <main class="main-container">
+
+    <!-- LEFT: Email Compose Window -->
+    <div class="email-client">
+
+      <!-- macOS-style window chrome -->
+      <div class="email-chrome">
+        <div class="chrome-dots">
+          <span class="chrome-dot chrome-dot-close"></span>
+          <span class="chrome-dot chrome-dot-min"></span>
+          <span class="chrome-dot chrome-dot-max"></span>
+        </div>
+        <div class="chrome-title">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          New Message — Shadow Claw Secure Mail
+        </div>
+        <div class="chrome-spacer"></div>
+      </div>
+
+      <!-- Email header fields: From / To / Subject -->
+      <div class="email-fields">
+        <div class="email-field-row">
+          <span class="email-field-label">From</span>
+          <select id="sel-sender" class="email-field-select">
+            <option value="">choose sender address…</option>
+          </select>
+        </div>
+        <div class="email-field-row">
+          <span class="email-field-label">To</span>
+          <select id="sel-target" class="email-field-select">
+            <option value="">choose recipient…</option>
+          </select>
+        </div>
+        <div class="email-field-row subject-row">
+          <span class="email-field-label">Subject</span>
+          <select id="sel-subject" class="email-field-select">
+            <option value="">choose subject line…</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Spam warning bar — appears when score ≥ 50% -->
+      <div class="spam-alert-bar" id="spam-alert-bar" style="display:none;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        This message may be spam. Exercise caution.
+      </div>
+
+      <!-- Email body — word selects are inline underlined blanks -->
+      <div class="email-body">
+        <div class="email-body-inner">
+
+          <p class="email-para"><select id="sel-word1" class="word-select"><option value="">— salutation —</option></select></p>
+
+          <p class="email-para"><span class="s-text">Your mission orders for the Yang Vault operation have been </span><select id="sel-word2" class="word-select"><option value="">— status —</option></select><span class="s-text">. You are required to </span><select id="sel-word3" class="word-select"><option value="">— action —</option></select><span class="s-text"> Yin Vault, Sector 9 — 31 Pale Moon Alley.</span></p>
+
+          <p class="email-para"><select id="sel-word4" class="word-select word-line"><option value="">— body text —</option></select></p>
+
+          <p class="email-para"><select id="sel-word5" class="word-select word-line"><option value="">— closing —</option></select></p>
+
+          <div class="email-signature">
+            <strong>Red Fang</strong><br>
+            Shadow Claw Command<br>
+            <span class="sig-addr">redfang@shadowclaw.org · sc-command.internal</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Email toolbar with Send button -->
+      <div class="email-toolbar">
+        <div class="toolbar-actions">
+          <button class="toolbar-btn" aria-label="Attach file" title="Attach file">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+            </svg>
+          </button>
+          <button class="toolbar-btn" aria-label="Format text" title="Format text">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/>
+            </svg>
+          </button>
+          <button class="toolbar-btn" aria-label="Insert link" title="Insert link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+          </button>
+        </div>
+        <button class="send-btn" id="submit-btn">
+          Send
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/>
+          </svg>
+        </button>
+      </div>
+
+    </div><!-- /.email-client -->
+
+    <!-- RIGHT: Spam Analyzer -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title"><span class="dot dot-gold"></span>Spam Analyzer</span>
+        <span class="panel-tag" id="analyzer-tag">AWAITING INPUT</span>
+      </div>
+      <div class="panel-body">
+
+        <div class="score-section">
+          <div class="score-header-row">
+            <span class="score-label">Spam Level</span>
+            <span class="score-number" id="score-number">0%</span>
+          </div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-track">
+              <div class="score-bar-fill" id="score-bar-fill"></div>
+            </div>
+            <div class="score-bar-threshold" title="Threshold: 87%"></div>
+          </div>
+          <p class="score-verdict" id="score-verdict">Select all fields to begin analysis.</p>
+        </div>
+
+        <div class="dim-divider"></div>
+
+        <p class="dim-section-title">Signal Breakdown</p>
+        <div class="dimension-list" id="dimension-list">
+          <!-- populated by JS -->
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- BOTTOM: Hints + Result -->
+  <div class="bottom-section">
+    <div class="hint-row">
+      <button class="hint-btn" id="hint-btn-1">💡 Hint 1</button>
+      <button class="hint-btn" id="hint-btn-2">💡 Hint 2</button>
+      <button class="hint-btn" id="hint-btn-3">💡 Hint 3</button>
+    </div>
+    <p class="hint-display" id="hint-display"></p>
+
+    <div class="result-card" id="result-card" style="display:none;">
+      <div class="result-icon" id="result-icon"></div>
+      <h2 class="result-title" id="result-title"></h2>
+      <p class="result-msg" id="result-msg"></p>
+      <div class="result-actions">
+        <button class="flag-btn" disabled title="Flag generation coming soon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+            <line x1="4" y1="22" x2="4" y2="15"/>
+          </svg>
+          Generate Flag
+        </button>
+        <button class="retry-btn" id="retry-btn">Reset Mission</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="confetti-container" id="confetti-container"></div>
+  <script src="phishing-script.js" defer></script>
+</body>
+</html>
