@@ -37,8 +37,8 @@
     <div class="mission-label">⚠ Hash Verification Exercise — Classified</div>
     <h1 class="mission-title">Operation Bamboo Collision</h1>
     <p class="mission-desc">
-      The message is already readable. Change <strong>only the address</strong>, create a different message,
-      and keep the <strong>same hash</strong> as the original transmission.
+      The scroll is already readable. Change <strong>only the destination line</strong>, redirect the traveler to the
+      <strong>Fountain of Tooth</strong> instead of the <strong>Fountain of Youth</strong>, and keep the <strong>same hash</strong>.
     </p>
   </section>
 
@@ -46,29 +46,29 @@
     <section class="panel">
       <div class="panel-header">
         <span class="panel-title"><span class="dot"></span>Mission Scroll</span>
-        <span class="panel-tag">ADDRESS FIELD EDITABLE</span>
+        <span class="panel-tag">DESTINATION EDITABLE</span>
       </div>
       <div class="panel-body">
         <p class="step-desc">
-          Edit only the highlighted address. The forged message must point to <strong>Bamboo Street</strong>,
-          but the final hash must still match the original transmission.
+          Edit only the highlighted destination. The forged scroll must still sound believable,
+          but it should now send them to <strong>Fountain of Tooth</strong> while preserving the original hash.
         </p>
         <article class="scroll-card">
           <p class="scroll-text">
-            White Lotus courier note.<br><br>
-            Move the decoy scroll before sunset. Shadow Claw scouts are tracking the western route.
-            Carry the false scroll to
+            White Lotus travel directive.<br><br>
+            If you seek the Fountain of Youth, leave the eastern ridge before sunrise and pass beneath the cedar arch.
+            Continue along the lantern path until the stone wayfinder splits in two, then follow the marked route to
             <input
               id="address-input"
               class="address-input"
               type="text"
-              value="11 Lotus Alley"
-              aria-label="Editable address"
+              value="Fountain of Youth"
+              aria-label="Editable destination"
               autocomplete="off"
               autocorrect="off"
               spellcheck="false"
             />
-            and leave it under the red gate lantern. Travel alone, speak to no one, and destroy this note after delivery.
+            where the basin lies behind the veil of mist. Approach in silence, take only one sip, and burn this scroll once the water is found.
           </p>
         </article>
         <div class="mini-note">
@@ -97,7 +97,7 @@
           </div>
 
           <div class="hash-card">
-            <div class="hash-label">Original Transmission Hash</div>
+            <div class="hash-label">Original Scroll Hash</div>
             <div class="hash-value" id="original-hash">00</div>
             <div class="hash-subtext">This value must stay the same.</div>
           </div>
@@ -105,19 +105,19 @@
           <div class="hash-card current-card">
             <div class="hash-label">Live Forged Hash</div>
             <div class="hash-value" id="current-hash">00</div>
-            <div class="hash-subtext" id="current-hash-text">Edit the address to begin.</div>
+            <div class="hash-subtext" id="current-hash-text">Edit the destination to begin.</div>
           </div>
 
           <div class="hash-card collision-card">
             <div class="hash-label">Collision Check</div>
             <div class="collision-readout" id="collision-readout">No collision yet.</div>
-            <div class="hash-subtext" id="collision-subtext">The message must change and the hash must still match.</div>
+            <div class="hash-subtext" id="collision-subtext">The scroll must change and the hash must still match.</div>
           </div>
         </div>
       </div>
       <div class="status-bar">
         <span class="status-dot idle" id="status-dot"></span>
-        <span class="status-msg" id="status-msg">Edit the address and watch the live hash.</span>
+        <span class="status-msg" id="status-msg">Edit the destination and watch the live hash.</span>
       </div>
     </section>
 
@@ -133,7 +133,7 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
           <polyline points="20 6 9 17 4 12"/>
         </svg>
-        Submit Collided Message
+        Submit Collided Scroll
       </button>
 
       <div class="result-card" id="result-card" style="display:none;">

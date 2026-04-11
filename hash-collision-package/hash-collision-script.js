@@ -1,10 +1,10 @@
-const ORIGINAL_ADDRESS = '11 Lotus Alley';
-const MESSAGE_PREFIX = 'White Lotus courier note. Move the decoy scroll before sunset. Shadow Claw scouts are tracking the western route. Carry the false scroll to ';
-const MESSAGE_SUFFIX = ' and leave it under the red gate lantern. Travel alone, speak to no one, and destroy this note after delivery.';
+const ORIGINAL_DESTINATION = 'Fountain of Youth';
+const MESSAGE_PREFIX = 'White Lotus travel directive. If you seek the Fountain of Youth, leave the eastern ridge before sunrise and pass beneath the cedar arch. Continue along the lantern path until the stone wayfinder splits in two, then follow the marked route to ';
+const MESSAGE_SUFFIX = ' where the basin lies behind the veil of mist. Approach in silence, take only one sip, and burn this scroll once the water is found.';
 const HINTS = [
-  'The forged address must end with Bamboo Street. Spaces and punctuation do not change the hash at all.',
-  'Bamboo Street is worth 35 before you add the house-number digits. The live hash has to come back to the original hash.',
-  'You do not need one exact house number. Any number whose digits add to 9 will create the collision.'
+  'Your forged destination must point to Fountain of Tooth. Spaces and punctuation do not change the hash at all.',
+  'Fountain of Tooth is 11 lower than Fountain of Youth under this hash rule.',
+  'Add digits that total 11 somewhere in the destination. For example, Fountain of Tooth 29 works.'
 ];
 
 const addressInput = document.getElementById('address-input');
@@ -26,15 +26,15 @@ const resultTitle = document.getElementById('result-title');
 const resultMsg = document.getElementById('result-msg');
 const retryBtn = document.getElementById('retry-btn');
 
-const originalMessage = buildMessage(ORIGINAL_ADDRESS);
+const originalMessage = buildMessage(ORIGINAL_DESTINATION);
 const originalHash = hashMessage(originalMessage).mod;
 let solved = false;
 let hintsUsed = 0;
 
 originalHashEl.textContent = padHash(originalHash);
 
-function buildMessage(address) {
-  return `${MESSAGE_PREFIX}${address}${MESSAGE_SUFFIX}`;
+function buildMessage(destination) {
+  return `${MESSAGE_PREFIX}${destination}${MESSAGE_SUFFIX}`;
 }
 
 function hashMessage(text) {
@@ -54,21 +54,21 @@ function normalizeSpaces(text) {
   return text.replace(/\s+/g, ' ').trim();
 }
 
-function isBambooAddress(address) {
-  return /^\d+\s+Bamboo Street$/i.test(normalizeSpaces(address));
+function isToothDestination(destination) {
+  return normalizeSpaces(destination).toUpperCase().includes('FOUNTAIN OF TOOTH');
 }
 
 function autoSizeAddressInput() {
-  const len = Math.max(12, Math.min(24, addressInput.value.length + 1));
+  const len = Math.max(18, Math.min(30, addressInput.value.length + 1));
   addressInput.style.width = `${len}ch`;
 }
 
 function updateState() {
-  const currentAddress = normalizeSpaces(addressInput.value);
-  const { mod } = hashMessage(buildMessage(currentAddress));
-  const changed = currentAddress.toUpperCase() !== ORIGINAL_ADDRESS.toUpperCase();
-  const bamboo = isBambooAddress(currentAddress);
-  const collisionReady = changed && bamboo && mod === originalHash;
+  const currentDestination = normalizeSpaces(addressInput.value);
+  const { mod } = hashMessage(buildMessage(currentDestination));
+  const changed = currentDestination.toUpperCase() !== ORIGINAL_DESTINATION.toUpperCase();
+  const tooth = isToothDestination(currentDestination);
+  const collisionReady = changed && tooth && mod === originalHash;
 
   currentHashEl.textContent = padHash(mod);
   currentHashText.textContent = mod === originalHash
@@ -81,37 +81,37 @@ function updateState() {
   addressInput.classList.toggle('ready', collisionReady);
 
   if (!changed) {
-    collisionReadout.textContent = 'Original message still unchanged.';
-    collisionSubtext.textContent = 'Edit the address to create a different message.';
+    collisionReadout.textContent = 'Original scroll still unchanged.';
+    collisionSubtext.textContent = 'Edit the destination to forge a different message.';
     statusDot.className = 'status-dot idle';
-    statusMsg.textContent = 'Edit the address and watch the live hash.';
+    statusMsg.textContent = 'Edit the destination and watch the live hash.';
     statusMsg.className = 'status-msg';
     statusPill.textContent = 'AWAITING COLLISION';
   } else if (collisionReady) {
     collisionReadout.textContent = 'Collision ready.';
-    collisionSubtext.textContent = 'Different address, same hash, Bamboo Street achieved.';
+    collisionSubtext.textContent = 'Different destination, same hash, Fountain of Tooth achieved.';
     statusDot.className = 'status-dot success';
-    statusMsg.textContent = 'Perfect. The forged message collides with the original.';
+    statusMsg.textContent = 'Perfect. The forged scroll now redirects them convincingly.';
     statusMsg.className = 'status-msg success';
     statusPill.textContent = 'HASH MATCH';
-  } else if (!bamboo) {
-    collisionReadout.textContent = 'Different message, wrong street.';
-    collisionSubtext.textContent = 'The forged address must be a number followed by Bamboo Street.';
+  } else if (!tooth) {
+    collisionReadout.textContent = 'Different message, wrong fountain.';
+    collisionSubtext.textContent = 'The forged destination must redirect them to Fountain of Tooth.';
     statusDot.className = 'status-dot active';
-    statusMsg.textContent = 'Good start. Now redirect the scroll to Bamboo Street.';
+    statusMsg.textContent = 'Good start. Now make the scroll point to Fountain of Tooth.';
     statusMsg.className = 'status-msg';
-    statusPill.textContent = 'ADDRESS CHANGED';
+    statusPill.textContent = 'DESTINATION CHANGED';
   } else {
-    collisionReadout.textContent = 'Bamboo Street set, hash still off.';
+    collisionReadout.textContent = 'Fountain of Tooth set, hash still off.';
     collisionSubtext.textContent = `Original hash ${padHash(originalHash)} vs live hash ${padHash(mod)}.`;
     statusDot.className = 'status-dot active';
-    statusMsg.textContent = 'Adjust the house number until the live hash matches the original.';
+    statusMsg.textContent = 'Adjust the destination with digits until the live hash matches the original.';
     statusMsg.className = 'status-msg';
     statusPill.textContent = 'CHECK COLLISION VALUE';
   }
 
   autoSizeAddressInput();
-  return { currentAddress, mod, collisionReady, bamboo, changed };
+  return { currentDestination, mod, collisionReady, tooth, changed };
 }
 
 addressInput.addEventListener('input', () => {
@@ -142,7 +142,7 @@ submitBtn.addEventListener('click', () => {
     resultIcon.textContent = '🏮';
     resultTitle.className = 'result-title win';
     resultTitle.textContent = 'Collision Achieved!';
-    resultMsg.textContent = 'The message now points to Bamboo Street, but the hash still matches the original transmission. Shadow Claw would accept the forged note.';
+    resultMsg.textContent = 'The scroll now sends them to Fountain of Tooth while preserving the original hash. A careless reader would trust the forged route.';
     retryBtn.textContent = 'Reset Mission';
     launchConfetti();
   } else {
@@ -152,11 +152,11 @@ submitBtn.addEventListener('click', () => {
     resultTitle.textContent = 'Collision Failed';
 
     if (!state.changed) {
-      resultMsg.textContent = 'The message has not changed yet. Edit the address so the forged note is different from the original.';
-    } else if (!state.bamboo) {
-      resultMsg.textContent = 'The forged address must be a number followed by Bamboo Street. Change the address, then check the hash again.';
+      resultMsg.textContent = 'The scroll has not changed yet. Edit the destination so the forged message differs from the original.';
+    } else if (!state.tooth) {
+      resultMsg.textContent = 'The forged scroll must redirect the reader to Fountain of Tooth. Change the destination, then check the hash again.';
     } else {
-      resultMsg.textContent = 'Not quite. Check the original hash value and adjust the house number until the live hash matches it exactly.';
+      resultMsg.textContent = 'Almost there. Fountain of Tooth is correct, but the hash still does not match. Add or adjust digits until the live hash matches exactly.';
     }
 
     retryBtn.textContent = 'Keep Editing';
@@ -169,7 +169,7 @@ retryBtn.addEventListener('click', () => {
   if (solved) {
     solved = false;
     addressInput.disabled = false;
-    addressInput.value = ORIGINAL_ADDRESS;
+    addressInput.value = ORIGINAL_DESTINATION;
     submitBtn.disabled = false;
     hintDisplay.textContent = '';
     hintsUsed = 0;
