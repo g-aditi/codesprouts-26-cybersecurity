@@ -405,15 +405,23 @@ p       { text-wrap:pretty; }
 
 /* Threshold marker at 87.5% */
 .score-bar-threshold {
-  position:absolute; left:87.5%;
+  position:absolute; left:71%;
   top:-4px; bottom:-4px; width:2px;
   background:var(--color-gold); border-radius:2px; opacity:0.75;
 }
 .score-bar-threshold::before {
-  content:'87%';
+  content:'71%';
   position:absolute; bottom:calc(100% + 3px); left:50%; transform:translateX(-50%);
   font-size:9px; font-family:var(--font-mono); font-weight:700;
   color:var(--color-gold); white-space:nowrap;
+}
+
+.email-field-static {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  padding: var(--space-2) var(--space-1);
 }
 
 /* Verdict */

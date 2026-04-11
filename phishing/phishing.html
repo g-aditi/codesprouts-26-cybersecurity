@@ -35,12 +35,19 @@
   </header>
 
   <section class="mission-banner">
-    <div class="mission-label">✦ Social Engineering Exercise — Classified</div>
+    <!-- <div class="mission-label">✦ Social Engineering Exercise — Classified</div>
     <h1 class="mission-title">Operation Shadow Ink</h1>
     <p class="mission-desc">
       Impersonate <strong>Red Fang</strong> via email — redirecting SC raiders to Yin Vault.
       Choose sender, recipient, and subject carefully, then craft the body using
       <strong>real phishing patterns</strong> to fool the spam classifier.
+    </p> -->
+    <div class="mission-label">✦ Social Engineering Exercise - Classified</div>
+    <h1 class="mission-title">Operation Shadow Ink</h1>
+    <p class="mission-desc">
+      Build an email that looks <strong>believable</strong> but still contains enough
+      phishing signals for the analyzer to catch. The goal is to recognize subtle red flags,
+      not to make the loudest spam. 
     </p>
   </section>
 
@@ -76,9 +83,7 @@
         </div>
         <div class="email-field-row">
           <span class="email-field-label">To</span>
-          <select id="sel-target" class="email-field-select">
-            <option value="">choose recipient…</option>
-          </select>
+          <span id="fixed-recipient" class="email-field-static">unit7@shadowclaw.org</span>
         </div>
         <div class="email-field-row subject-row">
           <span class="email-field-label">Subject</span>
@@ -103,7 +108,7 @@
 
           <p class="email-para"><select id="sel-word1" class="word-select"><option value="">— salutation —</option></select></p>
 
-          <p class="email-para"><span class="s-text">Your mission orders for the Yang Vault operation have been </span><select id="sel-word2" class="word-select"><option value="">— status —</option></select><span class="s-text">. You are required to </span><select id="sel-word3" class="word-select"><option value="">— action —</option></select><span class="s-text"> Yin Vault, Sector 9 — 31 Pale Moon Alley.</span></p>
+          <p class="email-para"><span class="s-text">Your mission orders for the Yang Vault operation have been </span><select id="sel-word2" class="word-select"><option value="">— status —</option></select><span class="s-text">. You are required to </span><select id="sel-word3" class="word-select"><option value="">— action —</option></select><span class="s-text"> Yin Vault, 13 Pale Moon Alley, Sector 2, East District.</span></p>
 
           <p class="email-para"><select id="sel-word4" class="word-select word-line"><option value="">— body text —</option></select></p>
 
@@ -158,16 +163,18 @@
 
         <div class="score-section">
           <div class="score-header-row">
-            <span class="score-label">Spam Level</span>
+            <span class="score-label">Phishing Realism</span>
             <span class="score-number" id="score-number">0%</span>
           </div>
           <div class="score-bar-wrap">
             <div class="score-bar-track">
               <div class="score-bar-fill" id="score-bar-fill"></div>
             </div>
-            <div class="score-bar-threshold" title="Threshold: 87%"></div>
+            <div class="score-bar-threshold" title="Threshold: 71%"></div>
           </div>
-          <p class="score-verdict" id="score-verdict">Select all fields to begin analysis.</p>
+          <p class="score-verdict" id="score-verdict">Select all fields to begin analysis. 
+            Aim for a realistic phishing email that is not too obvious, not too safe.
+          </p></p>
         </div>
 
         <div class="dim-divider"></div>
