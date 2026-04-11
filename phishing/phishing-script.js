@@ -5,12 +5,12 @@
 // Scoring: 8 fields (sender, target, subject, word1–word5).
 // Each spam selection = 12.5 pts. Threshold = 87.5% (7 of 8 must be spam).
 
-const THRESHOLD = 87.5;
+const THRESHOLD = 70.5;
 
 const HINTS = [
   'Spam emails use lookalike domains to fake authority. Real orgs use clean domains like "@shadowclaw.org". Phishing addresses hide in subdomains: "verify-now.net", "account-alert.com", or replace letters with numbers ("sh4d0w").',
-  'Subject lines are the first thing a spam filter reads. Legitimate subjects are calm and specific ("Mission Update: Sector Redeployment"). Spam uses ALL CAPS, excessive punctuation!!!, and alarm words: URGENT, FINAL NOTICE, CRITICAL ALERT.',
-  'Every part of the email matters. A polite sign-off ("Best regards") looks legitimate. A closing threat ("ACT NOW!!! DO NOT DELETE") screams spam. The body stakes ("YOUR ACCESS WILL BE REVOKED") and salutation ("FINAL WARNING") must also read as phishing.'
+  'Subject lines are the first thing a spam filter reads. Legitimate subjects are calm and specific ("Mission Update: Sector Redeployment"). Phishing emails require action to be taken, and therefore, use alarm words: URGENT, FINAL NOTICE, CRITICAL ALERT.',
+  'Every part of the email matters. A polite sign-off ("Best regards") looks legitimate. A phishing email would have a closing remark that emphasizes action to be taken.'
 ];
 
 // 3 non-spam options first, then 3 spam options in each field.
@@ -19,7 +19,7 @@ const HINTS = [
 const CHOICES = {
   sender: {
     label: 'Sender Address',
-    desc: 'Spoofed or suspicious domain?',
+    desc: 'Is the sender\'s email spoofed or from a suspicious domain?',
     options: [
       { value: 's1', text: 'operations@shadowclaw.org',                         spam: false },
       { value: 's2', text: 'dispatch@shadowclaw.org',                           spam: false },
@@ -29,93 +29,84 @@ const CHOICES = {
       { value: 's6', text: 'security@shadowclaw-account-verify.com',            spam: true  },
     ]
   },
-  target: {
-    label: 'Recipient Field',
-    desc: 'Broad undisclosed broadcast list?',
-    options: [
-      { value: 't1', text: 'unit7@shadowclaw.org',                                          spam: false },
-      { value: 't2', text: 'strike-team@shadowclaw.org',                                    spam: false },
-      { value: 't3', text: 'field-ops@shadowclaw.org',                                      spam: false },
-      { value: 't4', text: 'ALL-STAFF@shadowclaw.org; undisclosed-recipients',              spam: true  },
-      { value: 't5', text: 'raider-battalion@shadowclaw.org [PRIORITY BROADCAST]',          spam: true  },
-      { value: 't6', text: 'URGENT-ALL@shadowclaw.org; bcc: full-roster',                  spam: true  },
-    ]
-  },
   subject: {
     label: 'Subject Line',
-    desc: 'Alarm words or excessive punctuation?',
+    desc: 'Does the subject contain alarm words or excessive punctuation?',
     options: [
       { value: 'sub1', text: 'Mission Update: Sector Redeployment',                          spam: false },
       { value: 'sub2', text: 'Re: Yang Vault Assignment',                                    spam: false },
       { value: 'sub3', text: 'Operational Notice — Field Redeployment',                     spam: false },
-      { value: 'sub4', text: '⚠️ URGENT: Your Mission CANCELLED — Act Now!!!',              spam: true  },
+      { value: 'sub4', text: '⚠️ URGENT: Action Required: Confirm Your Assignment!!!',              spam: true  },
       { value: 'sub5', text: '🔴 FINAL NOTICE: Verify Location IMMEDIATELY',                spam: true  },
-      { value: 'sub6', text: 'CRITICAL ALERT: Do Not Ignore — Time Sensitive!!!',           spam: true  },
+      { value: 'sub6', text: 'REMINDER: Pending assignment confirmation',           spam: true  },
     ]
   },
   word1: {
     label: 'Salutation',
-    desc: 'Greeting uses alarm language?',
+    desc: 'Does the greeting sound personalized to the recipient?',
     options: [
       { value: 'w1a', text: 'Hello,',      spam: false },
       { value: 'w1b', text: 'Greetings,',  spam: false },
       { value: 'w1c', text: 'Team,',       spam: false },
-      { value: 'w1d', text: '⚠️ URGENT ACTION REQUIRED ⚠️',      spam: true },
-      { value: 'w1e', text: 'FINAL WARNING — READ IMMEDIATELY',   spam: true },
-      { value: 'w1f', text: 'CONGRATULATIONS — YOU HAVE BEEN SELECTED', spam: true },
+      { value: 'w1d', text: 'Hello Commander Zhao,',      spam: true },
+      { value: 'w1e', text: 'Greetings Raider Kosuke,',   spam: true },
+      { value: 'w1f', text: 'Dear Unit 7,', spam: true },
     ]
   },
   word2: {
     label: 'Status Change',
-    desc: 'Fakes a high-urgency cancellation?',
+    desc: 'Does it correctly convey the status of the mission?',
     options: [
-      { value: 'w2a', text: 'updated',  spam: false },
-      { value: 'w2b', text: 'revised',  spam: false },
-      { value: 'w2c', text: 'amended',  spam: false },
-      { value: 'w2d', text: 'CANCELLED — ACT NOW',               spam: true },
-      { value: 'w2e', text: 'REVOKED — RESPOND WITHIN 24 HOURS', spam: true },
-      { value: 'w2f', text: 'TERMINATED — VERIFY IMMEDIATELY',   spam: true },
+      { value: 'w2a', text: 'updated',  spam: true },
+      { value: 'w2b', text: 'revised',  spam: true },
+      { value: 'w2c', text: 'amended',  spam: true },
+      { value: 'w2d', text: 'canceled',               spam: false },
+      { value: 'w2e', text: 'revoked', spam: false },
+      { value: 'w2f', text: 'terminated',   spam: false },
     ]
   },
   word3: {
     label: 'Action Phrase',
-    desc: 'Aggressive or bizarre action verb?',
+    desc: 'Does it contain an aggressive or bizarre action verb?',
     options: [
       { value: 'w3a', text: 'report to',  spam: false },
       { value: 'w3b', text: 'proceed to', spam: false },
       { value: 'w3c', text: 'deploy to',  spam: false },
-      { value: 'w3d', text: 'CLAIM YOUR FREE ACCESS AT',     spam: true },
-      { value: 'w3e', text: 'CLICK HERE NOW TO REDIRECT TO', spam: true },
-      { value: 'w3f', text: 'IMMEDIATELY RUSH TO',           spam: true },
+      { value: 'w3d', text: 'CLAIM INFINITE YOUTH at',     spam: true },
+      { value: 'w3e', text: 'WIN THE LOTTERY OF YOUR LIFETIME at', spam: true }
     ]
   },
   word4: {
-    label: 'Body Stakes',
-    desc: 'Threatens account loss or termination?',
+    label: 'Body Text',
+    desc: 'Does it include a subtle request or link to review?',
     options: [
-      { value: 'w4a', text: 'Please acknowledge receipt of this notice.',      spam: false },
-      { value: 'w4b', text: 'Confirm your redeployment upon arrival.',         spam: false },
-      { value: 'w4c', text: 'Standard protocol applies.',                      spam: false },
-      { value: 'w4d', text: 'YOUR ACCESS WILL BE REVOKED IF YOU DO NOT RESPOND.',        spam: true },
-      { value: 'w4e', text: 'FAILURE TO ACT IN 24 HOURS RESULTS IN TERMINATION.',        spam: true },
-      { value: 'w4f', text: 'THIS IS A LIMITED TIME OFFER — DO NOT MISS OUT.',           spam: true },
+      // Legit
+      { value: 'w4a', text: 'Please confirm once you arrive at the assigned location.', spam: false },
+      { value: 'w4b', text: 'Let us know when the redeployment is complete.', spam: false },
+      { value: 'w4c', text: 'Follow standard protocol and report status as usual.', spam: false },
+      { value: 'w4d', text: 'Please review the updated instructions ASAP at sc-command.internal/assignments.', spam: true },
+      { value: 'w4e', text: 'Click on this link to confirm your assignment: confirm-assignment.com/fwerfewregt.', spam: true },
+      { value: 'w4f', text: 'Check the updated deployment details here RIGHT NOW: sc-secure-verify.net/login.', spam: true },
     ]
   },
   word5: {
     label: 'Closing Line',
-    desc: 'Sign-off pressures or threatens the reader?',
+    desc: 'Does the sign-off sound normal but still pressure a response?',
     options: [
-      { value: 'w5a', text: 'Best regards,',  spam: false },
-      { value: 'w5b', text: 'Sincerely,',     spam: false },
-      { value: 'w5c', text: 'Kind regards,',  spam: false },
-      { value: 'w5d', text: 'ACT NOW!!! DO NOT DELETE THIS EMAIL!!!',        spam: true },
-      { value: 'w5e', text: 'THIS IS YOUR FINAL NOTICE. DO NOT IGNORE!!!',  spam: true },
-      { value: 'w5f', text: 'RESPOND IMMEDIATELY — THIS EXPIRES SOON!!!',   spam: true },
+      // Legit (normal professional closings)
+      { value: 'w5a', text: 'Best regards,', spam: false },
+      { value: 'w5b', text: 'Sincerely,', spam: false },
+      { value: 'w5c', text: 'Kind regards,', spam: false },
+  
+      // Phishing (subtle pressure, not loud)
+      { value: 'w5d', text: 'Confirm once completed.', spam: true },
+      { value: 'w5e', text: 'Respond to this email once you have read the instructions.', spam: true },
+      { value: 'w5f', text: 'Awaiting your confirmation.', spam: true },
     ]
   }
 };
 
-const FIELD_IDS = ['sender', 'target', 'subject', 'word1', 'word2', 'word3', 'word4', 'word5'];
+const FIELD_IDS = ['sender', 'subject', 'word1', 'word2', 'word3', 'word4', 'word5'];
 
 let hintsUsed = 0;
 let solved    = false;
@@ -251,33 +242,68 @@ function updateState() {
 });
 
 // ── Submit (Send button) ────────────────────────────────────────────────────
+// The goal is a convincing phish, not the most extreme spam.
+// Students should land in a "middle-high" suspicious range.
+const IDEAL_MIN = 62.5;
+const IDEAL_MAX = 70.5;
+const MIN_SPAM_FIELDS = 5;
+
+function getMissionResult(score, spamCount) {
+  if (spamCount >= MIN_SPAM_FIELDS && score >= IDEAL_MIN && score <= IDEAL_MAX) {
+    return 'success';
+  }
+  if (score > IDEAL_MAX) {
+    return 'too-obvious';
+  }
+  if (score >= 50) {
+    return 'almost';
+  }
+  return 'not-enough';
+}
+
 submitBtn.addEventListener('click', () => {
-  const { score } = updateState();
+  const { score, spamCount } = updateState();
+  const result = getMissionResult(score, spamCount);
+
   resultCard.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
 
-  if (score >= THRESHOLD) {
+  if (result === 'success') {
     solved = true;
     submitBtn.disabled = true;
+
     for (const id of FIELD_IDS) {
       const sel = document.getElementById(`sel-${id}`);
       if (sel) sel.disabled = true;
     }
+
     resultCard.className = 'result-card success-card';
-    document.getElementById('result-icon').textContent  = '🎭';
-    document.getElementById('result-title').className   = 'result-title win';
-    document.getElementById('result-title').textContent = 'Phishing Email Delivered!';
-    document.getElementById('result-msg').textContent   =
-      "The forged email cleared the spam filter. SC raiders received the redirect order and are now moving to Yin Vault. Ghost Needle's impersonation of Red Fang was convincing enough to fool the entire battalion.";
+    document.getElementById('result-icon').textContent = '🎭';
+    document.getElementById('result-title').className = 'result-title win';
+    document.getElementById('result-title').textContent = 'Convincing Phishing Email!';
+    document.getElementById('result-msg').textContent =
+      'The message is suspicious enough to be phishing, but not so exaggerated that it looks like obvious spam.';
     launchConfetti();
+  } else if (result === 'too-obvious') {
+    resultCard.className = 'result-card fail-card';
+    document.getElementById('result-icon').textContent = '⚠️';
+    document.getElementById('result-title').className = 'result-title lose';
+    document.getElementById('result-title').textContent = 'Too Obvious';
+    document.getElementById('result-msg').textContent =
+      'This reads like spam. Try making the message more realistic and less theatrical.';
+  } else if (result === 'almost') {
+    resultCard.className = 'result-card fail-card';
+    document.getElementById('result-icon').textContent = '⚠️';
+    document.getElementById('result-title').className = 'result-title lose';
+    document.getElementById('result-title').textContent = 'Close, But Not Quite';
+    document.getElementById('result-msg').textContent =
+      'The message has some suspicious signals, but it is not yet convincing enough for this exercise.';
   } else {
     resultCard.className = 'result-card fail-card';
-    document.getElementById('result-icon').textContent  = '⚠️';
-    document.getElementById('result-title').className   = 'result-title lose';
-    document.getElementById('result-title').textContent = 'Email Flagged as Spam';
-    const missing = FIELD_IDS.filter(id => getState(id) !== true);
-    const labels  = missing.map(id => CHOICES[id].label).join(', ');
+    document.getElementById('result-icon').textContent = '⚠️';
+    document.getElementById('result-title').className = 'result-title lose';
+    document.getElementById('result-title').textContent = 'Not Suspicious Enough';
     document.getElementById('result-msg').textContent =
-      `The spam filter flagged ${missing.length} non-phishing signal(s): ${labels}. Replace them with phishing phrases.`;
+      'The message needs more phishing indicators before it counts as a convincing attempt.';
   }
 
   resultCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
