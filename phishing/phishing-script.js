@@ -35,9 +35,9 @@ const CHOICES = {
     options: [
       { value: 'sub1', text: 'Mission Update: Sector Redeployment',                          spam: false },
       { value: 'sub2', text: 'Re: Yang Vault Assignment',                                    spam: false },
-      { value: 'sub3', text: 'Operational Notice — Field Redeployment',                     spam: false },
-      { value: 'sub4', text: '⚠️ URGENT: Action Required: Confirm Your Assignment!!!',              spam: true  },
-      { value: 'sub5', text: '🔴 FINAL NOTICE: Verify Location IMMEDIATELY',                spam: true  },
+      { value: 'sub3', text: 'Operational Notice',                     spam: false },
+      { value: 'sub4', text: 'Confirm Your Assignment!!!',              spam: true  },
+      { value: 'sub5', text: 'Verify Location IMMEDIATELY',                spam: true  },
       { value: 'sub6', text: 'REMINDER: Pending assignment confirmation',           spam: true  },
     ]
   },
@@ -201,9 +201,9 @@ function updateState() {
   scoreBarFillEl.classList.remove('fill-low', 'fill-mid', 'fill-high');
 
   // Spam alert bar appears when half the signals are phishing
-  spamAlertBar.style.display = score >= 50 ? 'flex' : 'none';
+  spamAlertBar.style.display = score >= 72.1 ? 'flex' : 'none';
 
-  if (score >= THRESHOLD) {
+  if (score >= IDEAL_MIN) {
     scoreBarFillEl.classList.add('fill-high');
     scoreNumberEl.style.color  = 'var(--color-primary)';
     scoreVerdictEl.textContent = 'Convincing phishing detected. Hit Send.';
@@ -245,7 +245,7 @@ function updateState() {
 // The goal is a convincing phish, not the most extreme spam.
 // Students should land in a "middle-high" suspicious range.
 const IDEAL_MIN = 62.5;
-const IDEAL_MAX = 70.5;
+const IDEAL_MAX = 72;
 const MIN_SPAM_FIELDS = 5;
 
 function getMissionResult(score, spamCount) {
