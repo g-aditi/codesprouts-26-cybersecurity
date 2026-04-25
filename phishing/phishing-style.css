@@ -403,14 +403,14 @@ p       { text-wrap:pretty; }
 .score-bar-fill.fill-mid  { background:var(--color-gold); }
 .score-bar-fill.fill-high { background:var(--color-primary); }
 
-/* Threshold marker at 87.5% */
+/* Threshold marker at 83% */
 .score-bar-threshold {
-  position:absolute; left:71%;
+  position:absolute; left:83.33%;
   top:-4px; bottom:-4px; width:2px;
   background:var(--color-gold); border-radius:2px; opacity:0.75;
 }
 .score-bar-threshold::before {
-  content:'71%';
+  content:'83%';
   position:absolute; bottom:calc(100% + 3px); left:50%; transform:translateX(-50%);
   font-size:9px; font-family:var(--font-mono); font-weight:700;
   color:var(--color-gold); white-space:nowrap;

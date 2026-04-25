@@ -2,10 +2,10 @@
 // Teach real spam email patterns: spoofed senders, alarm subject lines,
 // urgency language, threats of account termination, and pressure closings.
 //
-// Scoring: 8 fields (sender, target, subject, word1–word5).
-// Each spam selection = 12.5 pts. Threshold = 87.5% (7 of 8 must be spam).
+// Scoring: 6 fields (sender, subject, word1, word3–word5).
+// Each spam selection = 16.67 pts. Threshold = 83.33% (5 of 6 must be spam).
 
-const THRESHOLD = 70.5;
+const THRESHOLD = 83.33;
 
 const HINTS = [
   'Spam emails use lookalike domains to fake authority. Real orgs use clean domains like "@shadowclaw.org". Phishing addresses hide in subdomains: "verify-now.net", "account-alert.com", or replace letters with numbers ("sh4d0w").',
@@ -53,18 +53,6 @@ const CHOICES = {
       { value: 'w1f', text: 'Dear Unit 7,', spam: true },
     ]
   },
-  word2: {
-    label: 'Status Change',
-    desc: 'Does it correctly convey the status of the mission?',
-    options: [
-      { value: 'w2a', text: 'updated',  spam: true },
-      { value: 'w2b', text: 'revised',  spam: true },
-      { value: 'w2c', text: 'amended',  spam: true },
-      { value: 'w2d', text: 'canceled',               spam: false },
-      { value: 'w2e', text: 'revoked', spam: false },
-      { value: 'w2f', text: 'terminated',   spam: false },
-    ]
-  },
   word3: {
     label: 'Action Phrase',
     desc: 'Does it contain an aggressive or bizarre action verb?',
@@ -106,7 +94,7 @@ const CHOICES = {
   }
 };
 
-const FIELD_IDS = ['sender', 'subject', 'word1', 'word2', 'word3', 'word4', 'word5'];
+const FIELD_IDS = ['sender', 'subject', 'word1', 'word3', 'word4', 'word5'];
 
 let hintsUsed = 0;
 let solved    = false;
@@ -200,10 +188,10 @@ function updateState() {
   scoreBarFillEl.style.width = `${scoreRounded}%`;
   scoreBarFillEl.classList.remove('fill-low', 'fill-mid', 'fill-high');
 
-  // Spam alert bar appears when half the signals are phishing
+  // Spam alert bar appears when enough signals are phishing
   spamAlertBar.style.display = score >= 72.1 ? 'flex' : 'none';
 
-  if (score >= IDEAL_MIN) {
+  if (score >= THRESHOLD) {
     scoreBarFillEl.classList.add('fill-high');
     scoreNumberEl.style.color  = 'var(--color-primary)';
     scoreVerdictEl.textContent = 'Convincing phishing detected. Hit Send.';
@@ -242,21 +230,11 @@ function updateState() {
 });
 
 // ── Submit (Send button) ────────────────────────────────────────────────────
-// The goal is a convincing phish, not the most extreme spam.
-// Students should land in a "middle-high" suspicious range.
-const IDEAL_MIN = 62.5;
-const IDEAL_MAX = 72;
 const MIN_SPAM_FIELDS = 5;
 
 function getMissionResult(score, spamCount) {
-  if (spamCount >= MIN_SPAM_FIELDS && score >= IDEAL_MIN && score <= IDEAL_MAX) {
+  if (spamCount >= MIN_SPAM_FIELDS && score >= THRESHOLD) {
     return 'success';
-  }
-  if (score > IDEAL_MAX) {
-    return 'too-obvious';
-  }
-  if (score >= 50) {
-    return 'almost';
   }
   return 'not-enough';
 }
@@ -283,20 +261,6 @@ submitBtn.addEventListener('click', () => {
     document.getElementById('result-msg').textContent =
       'The message is suspicious enough to be phishing, but not so exaggerated that it looks like obvious spam.';
     launchConfetti();
-  } else if (result === 'too-obvious') {
-    resultCard.className = 'result-card fail-card';
-    document.getElementById('result-icon').textContent = '⚠️';
-    document.getElementById('result-title').className = 'result-title lose';
-    document.getElementById('result-title').textContent = 'Too Obvious';
-    document.getElementById('result-msg').textContent =
-      'This reads like spam. Try making the message more realistic and less theatrical.';
-  } else if (result === 'almost') {
-    resultCard.className = 'result-card fail-card';
-    document.getElementById('result-icon').textContent = '⚠️';
-    document.getElementById('result-title').className = 'result-title lose';
-    document.getElementById('result-title').textContent = 'Close, But Not Quite';
-    document.getElementById('result-msg').textContent =
-      'The message has some suspicious signals, but it is not yet convincing enough for this exercise.';
   } else {
     resultCard.className = 'result-card fail-card';
     document.getElementById('result-icon').textContent = '⚠️';
