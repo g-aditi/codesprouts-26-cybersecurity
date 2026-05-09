@@ -143,13 +143,8 @@ submitBtn.addEventListener('click', () => {
     resultTitle.className = 'result-title win';
     resultTitle.textContent = 'Collision Achieved!';
     resultMsg.textContent = 'The scroll now sends them to Fountain of Tooth while preserving the original hash. A careless reader would trust the forged route.';
-    retryBtn.style.display = 'none';
+    retryBtn.textContent = 'Reset Mission';
     launchConfetti();
-    // ── Completion message ──────────────────────────────────────────────────
-    const completionWrap = document.createElement('div');
-    completionWrap.style.cssText = 'margin-top:24px;display:flex;flex-direction:column;align-items:center;gap:12px;width:100%';
-    completionWrap.innerHTML = `<div style="font-size:48px">&#127884;</div><h3 style="font-family:monospace;font-size:20px;color:#c9a84c;letter-spacing:2px;margin:0;text-align:center">ALL PHASES COMPLETE</h3><p style="font-size:15px;color:rgba(220,215,205,.65);line-height:1.7;text-align:center;max-width:380px;margin:0">Congratulations, Ghost Needle. You decrypted the briefing, crafted the misdirection, and forged the scroll. The Dragon Scroll is safe. White Lotus is proud of you.</p>`;
-    resultCard.appendChild(completionWrap);
   } else {
     resultCard.className = 'result-card fail-card';
     resultIcon.textContent = '☠️';
@@ -170,7 +165,22 @@ submitBtn.addEventListener('click', () => {
   resultCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
 });
 
-
+retryBtn.addEventListener('click', () => {
+  if (solved) {
+    solved = false;
+    addressInput.disabled = false;
+    addressInput.value = ORIGINAL_DESTINATION;
+    submitBtn.disabled = false;
+    hintDisplay.textContent = '';
+    hintsUsed = 0;
+    [1, 2, 3].forEach((n) => {
+      document.getElementById(`hint-btn-${n}`).disabled = false;
+    });
+  }
+  resultCard.style.display = 'none';
+  updateState();
+  addressInput.focus();
+});
 
 function launchConfetti() {
   const container = document.getElementById('confetti-container');
@@ -187,32 +197,6 @@ function launchConfetti() {
     container.innerHTML = '';
   }, 4500);
 }
-
-// ── Phase Gate ───────────────────────────────────────────────────────────────
-(function () {
-  const PHASE_FLAG  = 'flag{sh4d0w_1nk}';
-  const STORAGE_KEY = 'wl_phase3_unlocked';
-  const gate        = document.getElementById('mission-gate');
-  if (!gate) return;
-  function unlockGate() {
-    gate.style.opacity    = '0';
-    gate.style.transition = 'opacity 0.4s';
-    setTimeout(() => { gate.style.display = 'none'; }, 400);
-  }
-  if (sessionStorage.getItem(STORAGE_KEY) === '1') { unlockGate(); return; }
-  document.getElementById('gate-submit').addEventListener('click', () => {
-    const val = document.getElementById('gate-input').value.trim().toLowerCase().replace(/\s/g, '');
-    if (val === PHASE_FLAG) {
-      sessionStorage.setItem(STORAGE_KEY, '1');
-      unlockGate();
-    } else {
-      document.getElementById('gate-error').textContent = 'Incorrect flag — check your Phase 2 result.';
-    }
-  });
-  document.getElementById('gate-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') document.getElementById('gate-submit').click();
-  });
-})();
 
 (function () {
   const toggle = document.querySelector('[data-theme-toggle]');

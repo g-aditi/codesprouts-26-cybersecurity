@@ -203,21 +203,18 @@
       <h2 class="result-title" id="result-title"></h2>
       <p class="result-msg" id="result-msg"></p>
       <div class="result-actions">
+        <button class="flag-btn" disabled title="Flag generation coming soon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+            <line x1="4" y1="22" x2="4" y2="15"/>
+          </svg>
+          Generate Flag
+        </button>
         <button class="retry-btn" id="retry-btn">Reset Mission</button>
       </div>
     </div>
   </div>
 
-  <div id="mission-gate" style="position:fixed;inset:0;z-index:9999;background:rgba(8,10,18,0.97);display:flex;align-items:center;justify-content:center">
-    <div style="display:flex;flex-direction:column;align-items:center;gap:18px;padding:52px 44px;background:#0e1420;border:1px solid rgba(255,255,255,.08);border-radius:18px;max-width:460px;width:90%;text-align:center">
-      <div style="font-size:52px">&#128272;</div>
-      <h2 style="font-size:24px;color:#c9a84c;margin:0;font-family:inherit">Phase Locked</h2>
-      <p style="font-size:15px;color:rgba(220,215,205,.55);line-height:1.65;margin:0">Complete Phase 1 (Operation Dragon Scroll) first, then enter the flag you received here.</p>
-      <input id="gate-input" type="text" placeholder="flag{...}" spellcheck="false" autocomplete="off" style="width:100%;padding:13px 18px;background:#080c18;border:1px solid rgba(255,255,255,.1);border-radius:9px;color:#e8e0d5;font-family:monospace;font-size:16px;letter-spacing:1px;outline:none;text-align:center;box-sizing:border-box"/>
-      <button id="gate-submit" style="padding:13px 0;background:#c0392b;color:#fff;border:none;border-radius:9px;font-family:monospace;font-size:14px;letter-spacing:1px;cursor:pointer;width:100%">Unlock Phase 2</button>
-      <p id="gate-error" style="color:#c0392b;font-size:13px;min-height:16px;margin:0;font-family:monospace"></p>
-    </div>
-  </div>
   <div class="confetti-container" id="confetti-container"></div>
   <script src="phishing-script.js" defer></script>
 </body>
