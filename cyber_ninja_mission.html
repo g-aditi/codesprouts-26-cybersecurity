@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Ninja Mission — CodeSprouts 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080c18;--bg2:#0a0f1e;--bg3:#0f1830;--mission-bg:#0a1020;
+  --border:rgba(200,150,42,.22);--gold:#d4a43a;--gold-lt:#f0c060;
+  --gold-dim:rgba(212,164,58,.45);--red:#c0392b;--red-lt:#e05548;
+  --red-dim:rgba(192,57,43,.35);--text:#e8e0d0;
+  --text-dim:rgba(232,224,208,.55);--text-faint:rgba(232,224,208,.28);
+  --mono:'Share Tech Mono',monospace;--serif:'Crimson Pro',Georgia,serif;
+  --display:'Cinzel',serif;
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:var(--serif);color:var(--text);cursor:none}
+#cursor{position:fixed;pointer-events:none;z-index:9999;width:22px;height:22px;top:0;left:0;transform:translate(-50%,-50%)}
+#deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;width:100%;height:100%;display:flex;flex-direction:column;padding:50px 80px 70px;opacity:0;pointer-events:none;transition:opacity .55s ease,transform .55s ease;transform:translateX(50px);overflow:hidden;background:var(--bg)}
+.slide::before{content:'';position:absolute;inset:0;z-index:0;background-image:url("data:image/svg+xml,%3Csvg width='56' height='56' viewBox='0 0 56 56' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse cx='28' cy='28' rx='24' ry='24' fill='none' stroke='%23d4a43a' stroke-width='0.4' stroke-opacity='0.06'/%3E%3C/svg%3E");pointer-events:none}
+.slide::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.55;z-index:2}
+.slide.active{opacity:1;pointer-events:all;transform:translateX(0)}
+.slide.exit{opacity:0;transform:translateX(-50px)}
+.slide>*{position:relative;z-index:1}
+.ninja-wm{position:absolute;right:28px;bottom:58px;z-index:0;pointer-events:none;opacity:.11}
+.sn{position:absolute;bottom:20px;right:34px;font-family:var(--mono);font-size:12px;color:var(--text-faint);letter-spacing:2px;z-index:3}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:16px}
+.t-display{font-family:var(--display);font-weight:900;color:var(--gold);line-height:1.0;letter-spacing:.03em;text-shadow:0 0 60px rgba(212,164,58,.2)}
+.t-section{font-family:var(--display);font-weight:700;font-size:62px;color:var(--gold);line-height:1.1;letter-spacing:.025em}
+.t-slide{font-family:var(--display);font-weight:700;font-size:48px;color:var(--gold-lt);line-height:1.2;margin-bottom:26px;letter-spacing:.02em}
+.t-number{font-family:var(--display);font-weight:900;font-size:160px;color:transparent;-webkit-text-stroke:1px var(--gold-dim);line-height:1;user-select:none;position:absolute;right:60px;top:30px;pointer-events:none;z-index:0}
+p,li{font-size:22px;line-height:1.65;color:var(--text)}
+.lead{font-size:26px;font-style:italic;line-height:1.6}
+.dim{color:var(--text-dim)}.sm{font-size:18px}
+.hl{color:var(--gold-lt);font-weight:600}.hlr{color:var(--red-lt);font-weight:600}
+.mono-tag{font-family:var(--mono);font-size:.85em;background:rgba(212,164,58,.12);border:1px solid var(--border);padding:2px 8px;border-radius:4px;color:var(--gold-lt)}
+.rule{height:1px;border:none;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);margin:20px 0}
+.blist{list-style:none;display:flex;flex-direction:column;gap:14px}
+.blist li{padding-left:30px;position:relative}
+.blist li::before{content:'—';position:absolute;left:0;color:var(--gold);font-weight:700}
+.blist li.sub{font-size:20px;color:var(--text-dim);padding-left:52px}
+.blist li.sub::before{content:'·';left:30px;color:var(--gold-dim)}
+.card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:28px 30px;transition:border-color .2s,background .2s}
+.card:hover{border-color:var(--gold-dim);background:rgba(212,164,58,.04)}
+.card h3{font-family:var(--display);font-size:19px;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.card p{font-size:21px;color:var(--text-dim);line-height:1.6}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:22px;flex:1;align-items:start}
+.cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;flex:1;align-items:start}
+.duty-col{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:10px 0}
+.duty-col .icon{font-size:56px;display:block}
+.duty-col h3{font-family:var(--display);font-size:22px;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;line-height:1.3}
+.duty-col p{font-size:19px;color:var(--text-dim);max-width:280px}
+.mission{background:var(--mission-bg);border:1px solid var(--border);border-top:2px solid var(--gold);border-radius:10px;padding:32px 36px;flex:1;display:flex;flex-direction:column;gap:18px}
+.mission-step{display:flex;gap:18px;align-items:flex-start}
+.mission-step .num{font-family:var(--mono);font-size:14px;color:var(--gold);letter-spacing:1px;min-width:30px;padding-top:4px}
+.mission-step span{font-size:23px;line-height:1.55}
+.good-luck{font-family:var(--display);font-size:28px;color:var(--gold);text-align:center;letter-spacing:.1em;margin-top:4px}
+.term{background:#040908;border:1px solid rgba(212,164,58,.2);border-radius:8px;padding:22px 26px;font-family:var(--mono);font-size:15px;line-height:1.75;color:#a8c890;overflow:auto;flex:1;position:relative}
+.term::before{content:'● TRANSMISSION  ✓ DECODED';display:block;color:rgba(212,164,58,.4);font-size:10px;letter-spacing:3px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid rgba(212,164,58,.1)}
+.term .tg{color:var(--gold-lt)}.term .tr{color:var(--red-lt)}
+.scanline{position:absolute;top:0;left:0;right:0;height:2px;background:rgba(168,200,144,.1);animation:scan 5s linear infinite;pointer-events:none}
+@keyframes scan{from{transform:translateY(0)}to{transform:translateY(100vh)}}
+.cipher-wrap{display:flex;flex-direction:column;gap:5px}
+.cipher-row{display:flex;gap:3px}
+.c-cell{width:37px;height:37px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;border-radius:5px;transition:all .2s}
+.c-plain{background:rgba(212,164,58,.12);color:var(--gold-lt);border:1px solid rgba(212,164,58,.25)}
+.c-encoded{background:rgba(192,57,43,.18);color:#f0a090;border:1px solid rgba(192,57,43,.3)}
+.c-kw{background:rgba(46,160,80,.2);color:#80d890;border:1px solid rgba(46,160,80,.35)}
+.c-cell.lit{transform:scale(1.18);z-index:2;background:var(--gold)!important;color:var(--bg)!important;border-color:var(--gold)!important;box-shadow:0 0 14px rgba(212,164,58,.5)}
+.irow{display:flex;gap:10px;align-items:center;margin:12px 0}
+.iinput{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:11px 16px;color:var(--gold-lt);font-family:var(--mono);font-size:19px;letter-spacing:2px;text-transform:uppercase;outline:none;width:250px;transition:border-color .2s}
+.iinput:focus{border-color:var(--gold)}
+.ibtn{background:rgba(212,164,58,.14);border:1px solid var(--border);border-radius:6px;padding:11px 22px;color:var(--gold);font-family:var(--mono);font-size:14px;letter-spacing:2px;cursor:none;transition:all .2s;white-space:nowrap}
+.ibtn:hover{background:rgba(212,164,58,.28);border-color:var(--gold)}
+.iresult{font-family:var(--mono);font-size:22px;font-weight:700;color:#80d890;letter-spacing:3px;min-height:30px}
+.hrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.hbox{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:12px 20px;font-family:var(--mono);font-size:17px}
+.hbox label{color:var(--gold-dim);font-size:11px;display:block;letter-spacing:1px;margin-bottom:3px}
+.hbox span{color:#80d890}
+.hflow{display:flex;align-items:center;gap:14px;margin:12px 0;flex-wrap:wrap}
+.hf-box{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:14px 22px;font-family:var(--mono);font-size:18px;color:var(--gold-lt);text-align:center}
+.hf-fn{border-color:rgba(100,120,200,.3);color:var(--text-dim);cursor:none;transition:all .25s}
+.hf-fn:hover{background:rgba(100,120,200,.15);border-color:rgba(100,120,200,.6);color:var(--text)}
+.hf-out{border-color:var(--red-dim);transition:opacity .5s}
+.hf-out span{color:var(--red-lt)}
+.hf-arrow{color:var(--gold-dim);font-size:26px}
+.phish-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1}
+.phish-item{display:flex;gap:16px;align-items:center;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:20px 24px;min-height:100px;transition:border-color .2s}
+.phish-item:hover{border-color:var(--gold-dim)}
+.phish-n{font-family:var(--display);font-size:30px;font-weight:700;color:var(--gold);min-width:38px;line-height:1}
+.phish-lbl{font-family:var(--display);font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold-lt);margin-bottom:5px}
+.phish-desc{font-size:18px;color:var(--text-dim);line-height:1.5}
+.qopts{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+.qopt{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px 24px;font-size:21px;color:var(--text);cursor:none;transition:all .2s;text-align:left;width:100%;font-family:var(--serif)}
+.qopt:hover{border-color:var(--gold-dim);background:rgba(212,164,58,.07)}
+.qopt:disabled{cursor:none}
+.qopt.correct{border-color:#56d364;background:rgba(46,160,67,.15);color:#56d364}
+.qopt.wrong{border-color:var(--red-lt);background:rgba(192,57,43,.12);color:var(--red-lt)}
+.qfb{font-family:var(--mono);font-size:15px;margin-top:9px;min-height:22px;letter-spacing:1px}
+.bg-kanji{position:absolute;pointer-events:none;user-select:none;font-family:serif;font-size:320px;line-height:1;color:var(--gold);opacity:.03;right:-20px;bottom:-50px;z-index:0}
+.end-glow{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(212,164,58,.12) 0%,transparent 70%);pointer-events:none;z-index:0;animation:gpulse 3.5s ease-in-out infinite}
+@keyframes gpulse{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes fade-up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.slide.active .ani{animation:fade-up .45s ease both}
+.slide.active .ani:nth-child(1){animation-delay:.04s}
+.slide.active .ani:nth-child(2){animation-delay:.12s}
+.slide.active .ani:nth-child(3){animation-delay:.20s}
+.slide.active .ani:nth-child(4){animation-delay:.28s}
+.slide.active .ani:nth-child(5){animation-delay:.36s}
+.slide.active .ani:nth-child(6){animation-delay:.44s}
+.slide.active .ani:nth-child(7){animation-delay:.52s}
+.fc-box{background:var(--bg3);border:2px solid var(--border);border-radius:10px;padding:18px 24px;font-family:var(--mono);font-size:17px;color:var(--gold-lt);text-align:center;cursor:none;transition:all .25s;min-width:190px;line-height:1.4}
+.fc-box:hover{border-color:var(--gold);background:rgba(212,164,58,.1);transform:translateY(-3px);box-shadow:0 6px 20px rgba(212,164,58,.2)}
+.fc-box.active-step{border-color:var(--gold-lt);background:rgba(212,164,58,.18);box-shadow:0 0 20px rgba(212,164,58,.35)}
+.fc-box.done-step{border-color:#56d364;background:rgba(46,160,67,.12);color:#80d890}
+.fc-arrow{font-size:28px;color:var(--gold-dim);padding:0 4px;flex-shrink:0}
+.fc-num{display:block;font-size:11px;color:var(--gold-dim);letter-spacing:2px;margin-bottom:6px}
+.fc-detail{display:none;font-size:14px;color:var(--text-dim);margin-top:8px;line-height:1.5;border-top:1px solid var(--border);padding-top:8px}
+.fc-box.active-step .fc-detail{display:block}
+#nav{position:fixed;bottom:0;left:0;right:0;height:58px;z-index:100;display:flex;align-items:center;padding:0 44px;gap:20px;background:linear-gradient(transparent,rgba(8,12,24,.96))}
+.nbtn{width:42px;height:42px;border-radius:50%;background:transparent;border:1px solid var(--border);color:var(--gold);font-size:17px;cursor:none;display:flex;align-items:center;justify-content:center;transition:all .2s;outline:none}
+.nbtn:hover{background:rgba(212,164,58,.12);border-color:var(--gold)}
+.nbtn:disabled{opacity:.2;pointer-events:none}
+#pbar{flex:1;height:2px;background:rgba(212,164,58,.1);border-radius:2px;overflow:hidden;max-width:400px}
+#pfill{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));border-radius:2px;transition:width .4s ease}
+#counter{font-family:var(--mono);font-size:13px;color:var(--gold-dim);letter-spacing:2px;min-width:68px;text-align:center}
+#hint{position:fixed;bottom:16px;right:44px;font-family:var(--mono);font-size:10px;color:var(--text-faint);letter-spacing:2px;pointer-events:none;z-index:101}
+</style>
+</head>
+<body>
+<div id="cursor"><svg viewBox="0 0 22 22" fill="none"><path d="M4 2 L11 20 L13 12 L20 10 Z" fill="#d4a43a" stroke="#d4a43a" stroke-width=".4"/></svg></div>
+
+<svg width="0" height="0" style="position:absolute">
+<defs>
+<symbol id="nw" viewBox="0 0 100 180">
+  <ellipse cx="50" cy="70" rx="19" ry="25" fill="currentColor" opacity=".9"/>
+  <circle cx="50" cy="37" r="16" fill="currentColor"/>
+  <rect x="39" y="33" width="22" height="7" rx="3" fill="#080c18" opacity=".7"/>
+  <path d="M31 65 Q14 80 11 100" stroke="currentColor" stroke-width="9" stroke-linecap="round" fill="none"/>
+  <path d="M69 65 Q86 80 89 100" stroke="currentColor" stroke-width="9" stroke-linecap="round" fill="none"/>
+  <line x1="85" y1="95" x2="100" y2="64" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+  <rect x="82" y="93" width="9" height="6" rx="2" fill="currentColor"/>
+  <path d="M42 92 L37 148" stroke="currentColor" stroke-width="11" stroke-linecap="round" fill="none"/>
+  <path d="M58 92 L63 148" stroke="currentColor" stroke-width="11" stroke-linecap="round" fill="none"/>
+  <rect x="31" y="85" width="38" height="9" rx="4" fill="currentColor" opacity=".6"/>
+</symbol>
+<symbol id="blade" viewBox="0 0 200 60">
+  <polygon points="0,30 160,18 185,30 160,42" fill="#d4a43a" opacity=".9"/>
+  <polygon points="0,30 160,18 160,24" fill="#f0c060" opacity=".7"/>
+  <rect x="155" y="14" width="12" height="32" rx="4" fill="#a07020"/>
+  <rect x="167" y="20" width="33" height="20" rx="5" fill="#7a5010"/>
+  <line x1="171" y1="20" x2="168" y2="40" stroke="#d4a43a" stroke-width="1.5" opacity=".5"/>
+  <line x1="177" y1="20" x2="174" y2="40" stroke="#d4a43a" stroke-width="1.5" opacity=".5"/>
+  <line x1="183" y1="20" x2="180" y2="40" stroke="#d4a43a" stroke-width="1.5" opacity=".5"/>
+  <line x1="189" y1="20" x2="186" y2="40" stroke="#d4a43a" stroke-width="1.5" opacity=".5"/>
+  <circle cx="200" cy="30" r="9" fill="#a07020"/>
+</symbol>
+</defs>
+</svg>
+
+<div id="deck">
+
+<!-- P01 TITLE -->
+<div class="slide active" data-i="0">
+  <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.07;pointer-events:none;z-index:0" viewBox="0 0 1600 900">
+    <circle cx="1200" cy="450" r="380" fill="none" stroke="#d4a43a" stroke-width="1" stroke-dasharray="8 5"/>
+    <circle cx="1200" cy="450" r="280" fill="none" stroke="#d4a43a" stroke-width=".5"/>
+    <circle cx="1200" cy="450" r="180" fill="none" stroke="#d4a43a" stroke-width="1" stroke-dasharray="3 7"/>
+  </svg>
+  <svg class="ninja-wm" width="150" height="230"><use href="#nw" width="150" height="230" color="#d4a43a"/></svg>
+  <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%;gap:16px;text-align:center">
+    <p class="eyebrow ani" style="font-size:18px;letter-spacing:3px">CodeSprouts 2026 · Cybersecurity Workshop</p>
+    <h1 class="t-display ani" style="font-size:108px;line-height:.9">Cyber<br>Ninja<br>Mission</h1>
+    <div class="ani" style="margin:16px 0 10px;display:flex;justify-content:center">
+      <svg width="220" height="66" viewBox="0 0 200 60"><use href="#blade" width="200" height="60"/></svg>
+    </div>
+    <p class="ani dim sm" style="font-style:italic;letter-spacing:2px">Encryption · Social Engineering · Hashing</p>
+  </div>
+  <div class="sn">01 / 28</div>
+</div>
+
+<!-- P02 SOMETHING IS AMISS -->
+<div class="slide" data-i="1">
+  <div class="t-number" style="opacity:.07">白</div>
+  <div class="end-glow" style="width:550px;height:550px;top:50%;left:45%;transform:translate(-50%,-50%)"></div>
+  <svg class="ninja-wm" width="150" height="230"><use href="#nw" width="150" height="230" color="#d4a43a"/></svg>
+  <div style="display:flex;flex-direction:column;justify-content:center;height:100%;gap:20px">
+    <h2 class="t-section ani" style="font-size:68px">Something is Amiss<br>in White Lotus Village</h2>
+    <p class="lead ani dim" style="font-size:31px">The mission begins…</p>
+  </div>
+  <div class="sn">02 / 28</div>
+</div>
+
+<!-- P03 BACKSTORY -->
+<div class="slide" data-i="2">
+  <div class="bg-kanji">龍</div>
+  <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">There is tension in the air…</h2>
+  <div style="display:flex;flex-direction:column;gap:22px;flex:1;justify-content:center">
+    <p class="ani">The <span class="hl">White Lotus clan</span>, the ninja group of justice, has just received some concerning intel:</p>
+    <p class="ani">The evil <span class="hlr">Shadow Claw clan</span> is scheming to steal <span class="hl">The Dragon Scroll</span> from one of the White Lotus vaults.</p>
+    <p class="ani dim" style="font-size:20px">The Dragon Scroll contains directions to the <em>Fountain of Eternal Youth</em> — entrusted to White Lotus because anyone else would misuse it.</p>
+    <p class="ani">To foil these evil schemes, White Lotus has a ninja working undercover in Shadow Claw: <span class="hl">Ghost Needle</span>.</p>
+  </div>
+  <div class="sn">03 / 28</div>
+</div>
+
+<!-- P04 YOU ARE GHOST NEEDLE -->
+<div class="slide" data-i="3">
+  <div class="end-glow" style="width:650px;height:650px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+  <svg class="ninja-wm" width="155" height="235" style="opacity:.13"><use href="#nw" width="155" height="235" color="#d4a43a"/></svg>
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:20px;text-align:center">
+    <h2 class="t-section ani" style="font-size:72px">You are<br><span style="color:var(--gold-lt)">Ghost Needle.</span></h2>
+    <hr class="rule ani" style="width:240px">
+    <p class="lead ani dim" style="font-size:33px">The safety of the Dragon Scroll<br>is in your hands.</p>
+  </div>
+  <div class="sn">04 / 28</div>
+</div>
+
+<!-- P05 DUTIES x3 — icons + text, no boxes, centered -->
+<div class="slide" data-i="4">
+  <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">Your Duties</h2>
+  <div class="cols3" style="flex:1;align-items:center">
+    <div class="duty-col ani">
+      <div style="width:90px;height:90px;border-radius:50%;background:rgba(192,57,43,.25);border:2px solid rgba(192,57,43,.5);display:flex;align-items:center;justify-content:center;font-size:44px;margin-bottom:6px">📡</div>
+      <h3>Watch for White Lotus</h3>
+      <p>Stay alert for encrypted messages from headquarters</p>
+    </div>
+    <div class="duty-col ani">
+      <div style="width:90px;height:90px;border-radius:50%;background:rgba(192,57,43,.25);border:2px solid rgba(192,57,43,.5);display:flex;align-items:center;justify-content:center;font-size:44px;margin-bottom:6px">🏯</div>
+      <h3>Protect the Dragon Scroll</h3>
+      <p>Keep Yang Vault location secret at all costs</p>
+    </div>
+    <div class="duty-col ani">
+      <div style="width:90px;height:90px;border-radius:50%;background:rgba(192,57,43,.25);border:2px solid rgba(192,57,43,.5);display:flex;align-items:center;justify-content:center;font-size:44px;margin-bottom:6px">📜</div>
+      <h3>Give Shadow Claw a Fake Scroll</h3>
+      <p>Plant a forgery and lead them astray</p>
+    </div>
+  </div>
+  <div class="sn">05 / 28</div>
+</div>
+
+<!-- P06 SECTION 01 — non-header +10pt -->
+<div class="slide" data-i="5">
+  <div class="t-number">01</div>
+  <svg class="ninja-wm" width="150" height="230"><use href="#nw" width="150" height="230" color="#d4a43a"/></svg>
+  <div style="display:flex;flex-direction:column;justify-content:center;height:100%;gap:18px">
+    <p class="eyebrow ani" style="font-size:23px">Chapter One</p>
+    <h2 class="t-section ani">Ghost Needle's<br>Secret Briefing</h2>
+    <p class="lead ani dim" style="font-size:36px">A message arrives… but something's wrong</p>
+  </div>
+  <div class="sn">06 / 28</div>
+</div>
+
+<!-- P07 ENCRYPTED MESSAGE — bottom text +10pt -->
+<div class="slide" data-i="6">
+  <svg class="ninja-wm" width="130" height="200" style="bottom:72px"><use href="#nw" width="130" height="200" color="#d4a43a"/></svg>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px">
+    <h2 class="t-slide ani" style="margin-bottom:0;font-size:34px">You receive a message from White Lotus…</h2>
+    <span class="ani" style="font-family:var(--mono);font-size:12px;color:var(--gold-dim);letter-spacing:2px">INCOMING</span>
+  </div>
+  <div class="term ani" style="flex:1">
+    <div class="scanline"></div>
+    ENJPQ GIIRDI, <span class="tg">QNAP AP WNAQI DJQTP.</span> IXIUTQI JORIO ZIOJ JG QNI KJTOQIIGQN.<br><br>
+    PNSRJW UDSW NSP UJGKAOFIR LDSGP QJ OSAR YSGE VSTDQ. YJTO BJH: RJ GJQ DIQ QNIF OISUN AQ.<br><br>
+    OIRAOIUQ QNI PMTSR QJ YAG VSTDQ SQ <span class="tg">13</span> LSDI FJJG SDDIY, PIUQJO 2, ISPQ RAPQOAUQ, EOAR OIK <span class="tg">84-M.</span><br><br>
+    <span class="tr">QOTPQ ZIOJ LIJLDI AGPARI PNSRJW UDSW.</span> QNI ROSEJG PUOJDD FTPQ OIFSAG AG YSGE VSTDQ.<br><br>
+    <span class="tg">WNAQI DJQTP JTQ.</span>
+  </div>
+  <p class="ani" style="margin-top:14px;font-size:31px;color:var(--gold-lt)">…but these words don't seem to have any immediate meaning!</p>
+  <div class="sn">07 / 28</div>
+</div>
+
+<!-- P08 ENCRYPTION CONCEPT — renamed + bigger boxes +10pt -->
+<div class="slide" data-i="7">
+  <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">Encryption</h2>
+  <div class="cols2" style="flex:1;gap:24px">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div class="card ani" style="padding:34px 34px;flex:1"><h3 style="font-size:22px">What is Encryption?</h3><p style="font-size:24px">Encryption creates a <span class="hl">secret language</span> from normal text so only authorised people can read it.</p></div>
+      <div class="card ani" style="padding:34px 34px;flex:1"><h3 style="font-size:22px">What Can Encryption Do?</h3><p style="font-size:24px">Replace one word with another, swap sentences… and so on.</p></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div class="card ani" style="padding:34px 34px;flex:1"><h3 style="font-size:22px">What is a Cipher?</h3><p style="font-size:24px">A <span class="hl">cipher</span> rearranges or substitutes letters and digits to disguise the message.</p></div>
+      <div class="card ani" style="padding:34px 34px;flex:1;border-color:var(--red-dim);background:rgba(192,57,43,.08)"><h3 style="font-size:22px;color:var(--red-lt)">Key Insight</h3><p style="font-size:24px">White Lotus sent you a <strong>secret, encrypted message!</strong> You need to crack it.</p></div>
+    </div>
+  </div>
+  <div class="sn">08 / 28</div>
+</div>
+
+<!-- P09 HOW TO READ — interactive flowchart -->
+<div class="slide" data-i="8">
+  <svg class="ninja-wm" width="130" height="200" style="bottom:72px"><use href="#nw" width="130" height="200" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">Let's learn how to read this encryption!</h2>
+  <div style="flex:1;display:flex;flex-direction:column;gap:14px;overflow:hidden">
+    <p class="ani" style="font-size:20px;color:var(--text-dim)">There are many ways to encrypt a message. This one is a <span class="hl">keyword substitution cipher</span>. Click each step:</p>
+    <div style="display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center" class="ani">
+      <div class="fc-box" id="fc1" onclick="fcClick(1)" style="min-width:220px;font-size:18px"><span class="fc-num">STEP 1</span>Write down the alphabet<div class="fc-detail">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</div></div>
+      <div class="fc-arrow">→</div>
+      <div class="fc-box" id="fc2" onclick="fcClick(2)" style="min-width:240px;font-size:18px"><span class="fc-num">STEP 2</span>Write keyword below<br><span style="font-size:14px;color:var(--text-dim)">(omit duplicate letters)</span><div class="fc-detail" style="color:#80d890">Keyword: KEYWORD<br>K E Y W O R D A B C F…</div></div>
+      <div class="fc-arrow">→</div>
+      <div class="fc-box" id="fc3" onclick="fcClick(3)" style="min-width:240px;font-size:18px"><span class="fc-num">STEP 3</span>Fill remaining unused letters<div class="fc-detail">Continue with all letters not already in the keyword row.</div></div>
+    </div>
+    <div class="ani">
+      <p style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--gold-dim);margin-bottom:8px">FULL CIPHER TABLE (keyword: KEYWORD):</p>
+      <div id="cipherDemo" class="cipher-wrap"></div>
+    </div>
+  </div>
+  <div class="sn">09 / 28</div>
+</div>
+
+<!-- P10 INTERACTIVE CIPHER +10pt -->
+<div class="slide" data-i="9">
+  <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">Try it — Encrypt Your Own Word!</h2>
+  <div class="ani" style="margin-bottom:12px">
+    <p style="font-size:31px;margin-bottom:12px">Using keyword <span class="mono-tag">KEYWORD</span>, encrypt any word:</p>
+    <div class="irow">
+      <input class="iinput" id="encInp" maxlength="12" placeholder="TYPE A WORD" spellcheck="false">
+      <button class="ibtn" onclick="doEncrypt()">ENCRYPT ↯</button>
+      <button class="ibtn" style="opacity:.55" onclick="clearEnc()">CLEAR</button>
+    </div>
+    <div class="iresult" id="encOut"></div>
+  </div>
+  <div class="ani" style="flex:1;overflow:hidden">
+    <div id="cipherLive" class="cipher-wrap" style="transform:scale(.96);transform-origin:top left"></div>
+  </div>
+  <p class="ani dim sm" style="margin-top:8px;font-size:19px">Matching cells highlight gold. Try: <span class="mono-tag">NINJA</span> → <span class="mono-tag">IBICK</span></p>
+  <div class="sn">10 / 28</div>
+</div>
+
+<!-- P11 MISSION 1 — darker bg +10pt -->
+<div class="slide" data-i="10" style="background:#050c16">
+  <div class="bg-kanji">任</div>
+  <svg class="ninja-wm" width="148" height="225"><use href="#nw" width="148" height="225" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">Your Mission</h2>
+  <div class="mission" style="background:#030810">
+    <div class="mission-step ani"><span class="num">01.</span><span style="font-size:25px">Click on the challenge link.</span></div>
+    <div class="mission-step ani"><span class="num">02.</span><span style="font-size:25px"><strong>Decrypt the message</strong> using all the information available to you.</span></div>
+    <div class="mission-step ani"><span class="num">03.</span><span style="font-size:25px">If you feel stuck or confused, ask us for help!</span></div>
+    <div class="mission-step ani"><span class="num">04.</span><span style="font-size:25px">Once you successfully submit, you will receive a flag. <strong>Copy-paste it into the textbox.</strong></span></div>
+    <hr class="rule" style="margin:8px 0;opacity:.35">
+    <div class="good-luck ani">Good luck, Ghost Needle!</div>
+  </div>
+  <div class="sn">11 / 28</div>
+</div>
+
+<!-- P12 SECTION 02 +10pt -->
+<div class="slide" data-i="11">
+  <div class="t-number">02</div>
+  <svg class="ninja-wm" width="150" height="230"><use href="#nw" width="150" height="230" color="#d4a43a"/></svg>
+  <div style="display:flex;flex-direction:column;justify-content:center;height:100%;gap:18px">
+    <p class="eyebrow ani" style="font-size:23px">Chapter Two</p>
+    <h2 class="t-section ani">Red Fang, Raiders,<br>and a Wild Goose Chase</h2>
+    <p class="lead ani dim" style="font-size:36px">Time to play pretend…</p>
+  </div>
+  <div class="sn">12 / 28</div>
+</div>
+
+<!-- P13 DECRYPTED MESSAGE +10pt -->
+<div class="slide" data-i="12">
+  <svg class="ninja-wm" width="130" height="200" style="bottom:72px"><use href="#nw" width="130" height="200" color="#d4a43a"/></svg>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px">
+    <h2 class="t-slide ani" style="margin-bottom:0;font-size:40px">Your next instructions are clear…</h2>
+    <span class="ani" style="font-family:var(--mono);font-size:14px;color:#80d890;letter-spacing:2px">✓ DECRYPTED</span>
+  </div>
+  <div class="term ani" style="flex:1;font-size:16px">
+    <div class="scanline"></div>
+    <span class="tg">GHOST NEEDLE, THIS IS WHITE LOTUS.</span> EXECUTE ORDER ZERO ON THE FOURTEENTH.<br><br>
+    SHADOW CLAW HAS CONFIRMED PLANS TO RAID <span class="tg">YANG VAULT.</span> YOUR JOB: DO NOT LET THEM REACH IT.<br><br>
+    REDIRECT THE SQUAD TO <span class="tg">YIN VAULT</span> AT 13 PALE MOON ALLEY, SECTOR 2, EAST DISTRICT, GRID REF 84-Q. WE WILL PLANT A FAKE SCROLL INSIDE.<br><br>
+    <span class="tr">TRUST ZERO PEOPLE INSIDE SHADOW CLAW.</span> THE DRAGON SCROLL MUST REMAIN IN YANG VAULT. <span class="tr">NO EXCEPTIONS.</span> — WHITE LOTUS OUT.
+  </div>
+  <p class="ani" style="margin-top:14px;font-size:31px;color:var(--gold-lt)">…send the Shadow Claw Raiders on a wild goose chase!</p>
+  <div class="sn">13 / 28</div>
+</div>
+
+<!-- P14 DUTIES ch2 — no boxes, centered stacked +10pt -->
+<div class="slide" data-i="13">
+  <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">Your Duties</h2>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px">
+    <div class="duty-col ani" style="max-width:620px">
+      <div style="width:90px;height:90px;border-radius:50%;background:rgba(192,57,43,.25);border:2px solid rgba(192,57,43,.5);display:flex;align-items:center;justify-content:center;font-size:44px;margin-bottom:6px">🥷</div>
+      <h3 style="font-size:28px">Impersonate Red Fang</h3>
+      <p style="font-size:24px">Convincingly pretend to be <span class="hl">Red Fang</span>, the leader of Shadow Claw, and issue new orders to his ninjas.</p>
+    </div>
+    <div class="duty-col ani" style="max-width:620px">
+      <div style="width:90px;height:90px;border-radius:50%;background:rgba(192,57,43,.25);border:2px solid rgba(192,57,43,.5);display:flex;align-items:center;justify-content:center;font-size:44px;margin-bottom:6px">📨</div>
+      <h3 style="font-size:28px">Write the Misdirection Email</h3>
+      <p style="font-size:24px">Compose an email sending Shadow Claw Ninjas to <span class="hl">Yin Vault</span> — away from the real Dragon Scroll.</p>
+    </div>
+  </div>
+  <div class="sn">14 / 28</div>
+</div>
+
+<!-- P15 SOCIAL ENGINEERING — bigger boxes, centered, darker +10pt -->
+<div class="slide" data-i="14" style="background:#060a14">
+  <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">Social Engineering &amp; Phishing</h2>
+  <div style="display:flex;flex-direction:column;gap:16px;flex:1;align-items:center">
+    <div class="card ani" style="display:flex;gap:20px;align-items:flex-start;background:#090f20;padding:30px 34px;width:100%;max-width:880px">
+      <span style="font-size:40px">🎭</span><div><h3 style="font-size:22px">Social Engineering</h3><p style="font-size:25px">Tricking people into doing what the attacker wants them to do.</p></div>
+    </div>
+    <div class="card ani" style="display:flex;gap:20px;align-items:flex-start;background:#090f20;padding:30px 34px;width:100%;max-width:880px">
+      <span style="font-size:40px">🎪</span><div><h3 style="font-size:22px">Pretexting</h3><p style="font-size:25px"><span class="hl">Impersonate</span> someone trusted — a boss, a friend, an official — and create a believable fake reason.</p></div>
+    </div>
+    <div class="card ani" style="display:flex;gap:20px;align-items:flex-start;background:#0d0808;border-color:var(--red-dim);padding:30px 34px;width:100%;max-width:880px">
+      <span style="font-size:40px">🎣</span><div><h3 style="font-size:22px;color:var(--red-lt)">Phishing</h3><p style="font-size:25px">The most common form — send a fake message that looks real, get the target to click, share, or obey.</p></div>
+    </div>
+  </div>
+  <div class="sn">15 / 28</div>
+</div>
+
+<!-- P16 PHISHING COMPONENTS — equal boxes, darker +10pt -->
+<div class="slide" data-i="15" style="background:#060a14">
+  <svg class="ninja-wm" width="130" height="200" style="bottom:72px"><use href="#nw" width="130" height="200" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">Typical Components of a Phishing Email</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1">
+    <div class="phish-item ani" style="background:#090f20;min-height:110px"><span class="phish-n">1</span><div><div class="phish-lbl" style="font-size:17px">Urgent Language</div><div class="phish-desc" style="font-size:20px">"ACCOUNT COMPROMISED: UPDATE PASSWORD NOW!"</div></div></div>
+    <div class="phish-item ani" style="background:#090f20;min-height:110px"><span class="phish-n">2</span><div><div class="phish-lbl" style="font-size:17px">Inconsistent Sender</div><div class="phish-desc" style="font-size:20px">alex@c<span style="color:var(--gold-lt)">0</span>mpany.com — zero instead of "o"</div></div></div>
+    <div class="phish-item ani" style="background:#090f20;min-height:110px"><span class="phish-n">3</span><div><div class="phish-lbl" style="font-size:17px">Generic Greeting</div><div class="phish-desc" style="font-size:20px">"Dear User," — real companies know your name</div></div></div>
+    <div class="phish-item ani" style="background:#090f20;min-height:110px"><span class="phish-n">4</span><div><div class="phish-lbl" style="font-size:17px">Spelling Mistakes</div><div class="phish-desc" style="font-size:20px">"Update <span style="color:var(--red-lt)">you're</span> password" — typos and grammar errors</div></div></div>
+    <div class="phish-item ani" style="background:#090f20;min-height:110px;grid-column:1/-1"><span class="phish-n">5</span><div><div class="phish-lbl" style="font-size:17px">Shortened / Suspicious URLs</div><div class="phish-desc" style="font-size:20px">bitly.com/c0mpanyreset — hides the real destination from the victim</div></div></div>
+  </div>
+  <div class="sn">16 / 28</div>
+</div>
+
+<!-- P17 MISSION 2 — darker +10pt -->
+<div class="slide" data-i="16" style="background:#050c16">
+  <div class="bg-kanji">任</div>
+  <svg class="ninja-wm" width="148" height="225"><use href="#nw" width="148" height="225" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">Your Mission</h2>
+  <div class="mission" style="background:#030810">
+    <div class="mission-step ani"><span class="num">01.</span><span style="font-size:25px">Click on the challenge link.</span></div>
+    <div class="mission-step ani"><span class="num">02.</span><span style="font-size:25px">Select the correct dropdown options to <strong>redirect Shadow Claw Ninjas</strong> to Yin Vault.</span></div>
+    <div class="mission-step ani"><span class="num">03.</span><span style="font-size:25px">If you feel stuck or confused, ask us for help!</span></div>
+    <div class="mission-step ani"><span class="num">04.</span><span style="font-size:25px">Once you successfully submit, you will receive a flag. <strong>Copy-paste it into the textbox.</strong></span></div>
+    <hr class="rule" style="margin:8px 0;opacity:.35">
+    <div class="good-luck ani">Good luck, Ghost Needle!</div>
+  </div>
+  <div class="sn">17 / 28</div>
+</div>
+
+<!-- P18 SECTION 03 +10pt -->
+<div class="slide" data-i="17">
+  <div class="t-number">03</div>
+  <svg class="ninja-wm" width="150" height="230"><use href="#nw" width="150" height="230" color="#d4a43a"/></svg>
+  <div style="display:flex;flex-direction:column;justify-content:center;height:100%;gap:18px">
+    <p class="eyebrow ani" style="font-size:23px">Chapter Three</p>
+    <h2 class="t-section ani">Fountain of Youth<br>or Fountain of Tooth?</h2>
+    <p class="lead ani dim" style="font-size:36px">Forge the scroll — but don't get caught</p>
+  </div>
+  <div class="sn">18 / 28</div>
+</div>
+
+<!-- P19 BUT NOW WHAT +10pt -->
+<div class="slide" data-i="18">
+  <div class="bg-kanji">偽</div>
+  <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
+  <div style="display:flex;flex-direction:column;justify-content:center;height:100%;gap:24px">
+    <p class="lead ani" style="font-size:36px">You've redirected the Shadow Claw ninjas to the Yin Vault…</p>
+    <h2 class="t-section ani" style="font-size:68px;color:var(--text)">But now what?</h2>
+    <p class="lead ani" style="font-size:36px">The Dragon Scroll contains the address to the <span class="hl">Fountain of Youth.</span></p>
+    <p class="lead ani" style="font-size:32px;color:var(--gold-lt)">What if we gave the bad guys the address to the <span class="hlr">Fountain of Tooth?</span></p>
+  </div>
+  <div class="sn">19 / 28</div>
+</div>
+
+<!-- P20 DUTIES ch3 — no boxes, centered stacked +10pt -->
+<div class="slide" data-i="19">
+  <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">Your Duties</h2>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px">
+    <div class="duty-col ani" style="max-width:620px">
+      <div style="width:90px;height:90px;border-radius:50%;background:rgba(192,57,43,.25);border:2px solid rgba(192,57,43,.5);display:flex;align-items:center;justify-content:center;font-size:44px;margin-bottom:6px">✏️</div>
+      <h3 style="font-size:28px">Change the Scroll Contents</h3>
+      <p style="font-size:24px">Replace the <span class="hl">Fountain of Youth</span> address with the <span class="hlr">Fountain of Tooth</span> in the fake scroll.</p>
+    </div>
+    <div class="duty-col ani" style="max-width:620px">
+      <div style="width:90px;height:90px;border-radius:50%;background:rgba(192,57,43,.25);border:2px solid rgba(192,57,43,.5);display:flex;align-items:center;justify-content:center;font-size:44px;margin-bottom:6px">🔢</div>
+      <h3 style="font-size:28px">Match the Hash</h3>
+      <p style="font-size:24px">The Shadow Clan checks the <span class="hl">message hash</span> to detect tampering — your fake must match!</p>
+    </div>
+  </div>
+  <div class="sn">20 / 28</div>
+</div>
+
+<!-- P21 BUT WAIT — no 'Warning', +10pt -->
+<div class="slide" data-i="20">
+  <div class="end-glow" style="width:500px;height:500px;top:50%;left:55%;transform:translate(-50%,-50%)"></div>
+  <svg class="ninja-wm" width="148" height="225"><use href="#nw" width="148" height="225" color="#d4a43a"/></svg>
+  <div style="display:flex;flex-direction:column;justify-content:center;height:100%;gap:22px">
+    <h2 class="t-section ani" style="font-size:70px">But wait…</h2>
+    <hr class="rule ani" style="width:200px">
+    <p class="lead ani dim" style="font-size:36px">The Shadow Clan knows if the scroll has been tampered with!</p>
+    <p class="lead ani dim" style="font-size:33px">As Ghost Needle, you know they use <span class="hl">Ninjutsu</span>:<br><em>Ninja math tricks to represent text with numbers uniquely.</em></p>
+  </div>
+  <div class="sn">21 / 28</div>
+</div>
+
+<!-- P22 HASHING — centered, darker, hash hidden until clicked +10pt -->
+<div class="slide" data-i="21" style="background:#060a14">
+  <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">Hashing</h2>
+  <div style="display:flex;flex-direction:column;gap:16px;flex:1;align-items:center">
+    <div class="card ani" style="display:flex;gap:20px;align-items:flex-start;background:#090f20;padding:28px 32px;width:100%;max-width:880px">
+      <span style="font-size:40px">🔨</span><div><h3 style="font-size:22px">What is Hashing?</h3><p style="font-size:25px">Converting data into a <span class="hl">short fixed value</span> — a digital fingerprint of the data.</p></div>
+    </div>
+    <div style="width:100%;max-width:880px" class="ani">
+      <div class="hflow" style="justify-content:center">
+        <div class="hf-box" style="font-size:20px;padding:16px 26px">"Apple" 🍎</div>
+        <span class="hf-arrow">→</span>
+        <div class="hf-box hf-fn" id="hfn1" onclick="revealHash('hfn1','hout1')" style="font-size:20px;padding:16px 26px;min-width:170px">🔀 Hash Function<br><span style="font-size:13px;color:var(--gold-dim)">(click to hash)</span></div>
+        <span class="hf-arrow">→</span>
+        <div class="hf-box hf-out" id="hout1" style="opacity:0;font-size:20px;padding:16px 26px"><span>7a3f2b1c</span></div>
+      </div>
+      <div class="hflow" style="justify-content:center">
+        <div class="hf-box" style="font-size:20px;padding:16px 26px">"apple" 🍏</div>
+        <span class="hf-arrow">→</span>
+        <div class="hf-box hf-fn" id="hfn2" onclick="revealHash('hfn2','hout2')" style="font-size:20px;padding:16px 26px;min-width:170px">🔀 Hash Function<br><span style="font-size:13px;color:var(--gold-dim)">(click to hash)</span></div>
+        <span class="hf-arrow">→</span>
+        <div class="hf-box hf-out" id="hout2" style="opacity:0;font-size:20px;padding:16px 26px"><span style="color:#f97070">9c14e7a2</span></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;max-width:880px" class="ani">
+      <div class="card" style="background:#090f20;padding:26px 28px"><h3 style="font-size:21px">Same Input → Same Hash</h3><p style="font-size:23px">Hash is deterministic and consistent</p></div>
+      <div class="card" style="background:#090f20;padding:26px 28px"><h3 style="font-size:21px">Small Change → Different Hash</h3><p style="font-size:23px">Even one character changes everything</p></div>
+    </div>
+  </div>
+  <div class="sn">22 / 28</div>
+</div>
+
+<!-- P23 SIMPLE HASH + interactive flowchart +10pt -->
+<div class="slide" data-i="22">
+  <svg class="ninja-wm" width="130" height="200" style="bottom:72px"><use href="#nw" width="130" height="200" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">A Simple Hash (Ninjutsu)</h2>
+  <div class="cols2" style="flex:1;align-items:start;gap:28px">
+    <div>
+      <ul class="blist ani" style="gap:14px">
+        <li style="font-size:23px">Assign a number to each letter: <span class="mono-tag">A=1, B=2, C=3…</span></li>
+        <li style="font-size:23px">Add all numeric values in the message</li>
+        <li class="sub" style="font-size:21px">Shadow Clan = 19+7+1+4+15+23+3+11+1+14 = <span class="hl">98</span></li>
+        <li style="font-size:23px">Divide by 100 — keep the <span class="hl">last two digits</span></li>
+        <li class="sub" style="font-size:21px">98 ÷ 100 → remainder = <span class="hl">98</span> → hash is <span class="hl">98</span></li>
+      </ul>
+      <hr class="rule ani">
+      <p style="font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--gold-dim);margin-bottom:10px" class="ani">CLICK EACH STEP TO EXPLORE:</p>
+      <div style="display:flex;align-items:center;gap:0;flex-wrap:wrap" class="ani">
+        <div class="fc-box" id="hfc1" onclick="hfcClick(1)" style="min-width:150px;font-size:16px"><span class="fc-num">STEP 1</span>A→1, B→2… Z→26<div class="fc-detail">Map every letter to its position in the alphabet.</div></div>
+        <div class="fc-arrow">→</div>
+        <div class="fc-box" id="hfc2" onclick="hfcClick(2)" style="min-width:150px;font-size:16px"><span class="fc-num">STEP 2</span>Sum all values<div class="fc-detail">Add every number together. CAT = 3+1+20 = 24</div></div>
+        <div class="fc-arrow">→</div>
+        <div class="fc-box" id="hfc3" onclick="hfcClick(3)" style="min-width:150px;font-size:16px"><span class="fc-num">STEP 3</span>Sum mod 100<div class="fc-detail">Remainder when dividing by 100. CAT hash = 24</div></div>
+      </div>
+    </div>
+    <div class="ani">
+      <p class="eyebrow" style="margin-bottom:12px;font-size:15px">Try the hash calculator:</p>
+      <div class="irow">
+        <input class="iinput" id="hashInp" placeholder="TYPE TEXT" spellcheck="false" style="font-size:18px">
+        <button class="ibtn" onclick="doHash()">HASH ↯</button>
+      </div>
+      <div class="hrow" id="hashOut"></div>
+    </div>
+  </div>
+  <div class="sn">23 / 28</div>
+</div>
+
+<!-- P24 MISSION 3 — darker +10pt -->
+<div class="slide" data-i="23" style="background:#050c16">
+  <div class="bg-kanji">任</div>
+  <svg class="ninja-wm" width="148" height="225"><use href="#nw" width="148" height="225" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">Your Mission</h2>
+  <div class="mission" style="background:#030810">
+    <div class="mission-step ani"><span class="num">01.</span><span style="font-size:25px">Click on the challenge link.</span></div>
+    <div class="mission-step ani"><span class="num">02.</span><span style="font-size:25px">Adjust the scroll to <strong>lead Shadow Claw to the Fountain of Tooth</strong> — while keeping the same hash!</span></div>
+    <div class="mission-step ani"><span class="num">03.</span><span style="font-size:25px">If you feel stuck or confused, ask us for help!</span></div>
+    <div class="mission-step ani"><span class="num">04.</span><span style="font-size:25px">Once you successfully submit, you will receive a flag. <strong>Copy-paste it into the textbox.</strong></span></div>
+    <hr class="rule" style="margin:8px 0;opacity:.35">
+    <div class="good-luck ani">Good luck, Ghost Needle!</div>
+  </div>
+  <div class="sn">24 / 28</div>
+</div>
+
+<!-- P25 QUIZ ENCRYPTION +10pt -->
+<div class="slide" data-i="24">
+  <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">Quick Check — Encryption</h2>
+  <div class="ani">
+    <p style="font-size:26px;margin-bottom:12px">What does a <span class="hl">cipher</span> do?</p>
+    <div class="qopts" id="q1">
+      <button class="qopt" onclick="quiz('q1',this,false)">Translates a message into another language</button>
+      <button class="qopt" onclick="quiz('q1',this,true)">Substitutes or rearranges letters to disguise a message</button>
+      <button class="qopt" onclick="quiz('q1',this,false)">Compresses data to make it smaller</button>
+      <button class="qopt" onclick="quiz('q1',this,false)">Creates a digital fingerprint of data</button>
+    </div>
+    <div class="qfb" id="q1-fb"></div>
+  </div>
+  <hr class="rule ani">
+  <div class="ani">
+    <p style="font-size:26px;margin-bottom:12px">With keyword <span class="mono-tag">KEYWORD</span>, what does <span class="mono-tag">A</span> encrypt to?</p>
+    <div class="qopts" id="q2">
+      <button class="qopt" onclick="quiz('q2',this,false)">A</button>
+      <button class="qopt" onclick="quiz('q2',this,true)">K</button>
+      <button class="qopt" onclick="quiz('q2',this,false)">Z</button>
+      <button class="qopt" onclick="quiz('q2',this,false)">E</button>
+    </div>
+    <div class="qfb" id="q2-fb"></div>
+  </div>
+  <div class="sn">25 / 28</div>
+</div>
+
+<!-- P26 QUIZ PHISHING+HASHING +10pt -->
+<div class="slide" data-i="25">
+  <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
+  <h2 class="t-slide ani">Quick Check — Phishing &amp; Hashing</h2>
+  <div class="ani">
+    <p style="font-size:26px;margin-bottom:12px">Which is a red flag for a phishing email?</p>
+    <div class="qopts" id="q3">
+      <button class="qopt" onclick="quiz('q3',this,false)">The email has your full name in the greeting</button>
+      <button class="qopt" onclick="quiz('q3',this,true)">The sender's email says boss@c0mpany.com (zero for 'o')</button>
+      <button class="qopt" onclick="quiz('q3',this,false)">The email comes from your company's official domain</button>
+    </div>
+    <div class="qfb" id="q3-fb"></div>
+  </div>
+  <hr class="rule ani">
+  <div class="ani">
+    <p style="font-size:26px;margin-bottom:12px">You change one letter in a file. What happens to its hash?</p>
+    <div class="qopts" id="q4">
+      <button class="qopt" onclick="quiz('q4',this,false)">The hash stays exactly the same</button>
+      <button class="qopt" onclick="quiz('q4',this,false)">The hash changes by just one character</button>
+      <button class="qopt" onclick="quiz('q4',this,true)">The hash changes completely</button>
+    </div>
+    <div class="qfb" id="q4-fb"></div>
+  </div>
+  <div class="sn">26 / 28</div>
+</div>
+
+<!-- P27 GOOD JOB +10pt -->
+<div class="slide" data-i="26">
+  <div class="bg-kanji">完</div>
+  <svg class="ninja-wm" width="155" height="235"><use href="#nw" width="155" height="235" color="#d4a43a"/></svg>
+  <div style="display:flex;flex-direction:column;justify-content:center;height:100%;gap:24px">
+    <h2 class="t-section ani" style="font-size:68px">Good job, Ghost Needle.</h2>
+    <p class="lead ani" style="font-size:36px">Your work has saved the Dragon Scroll.</p>
+    <hr class="rule ani" style="width:300px">
+    <ul class="blist ani" style="gap:16px">
+      <li style="font-size:26px">Stay safe online — the real world has Shadow Claws too</li>
+      <li style="font-size:26px">Don't let the attackers get to you</li>
+      <li style="font-size:26px">Protect your clan — and your data</li>
+    </ul>
+  </div>
+  <div class="sn">27 / 28</div>
+</div>
+
+<!-- P28 THANK YOU +10pt -->
+<div class="slide" data-i="27">
+  <div class="end-glow" style="width:750px;height:750px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+  <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.07;pointer-events:none;z-index:0" viewBox="0 0 1600 900">
+    <circle cx="800" cy="450" r="340" fill="none" stroke="#d4a43a" stroke-width="1" stroke-dasharray="10 6"/>
+    <circle cx="800" cy="450" r="260" fill="none" stroke="#d4a43a" stroke-width=".5"/>
+    <circle cx="800" cy="450" r="180" fill="none" stroke="#d4a43a" stroke-width="1.5"/>
+    <circle cx="800" cy="450" r="100" fill="none" stroke="#d4a43a" stroke-width=".5"/>
+  </svg>
+  <svg class="ninja-wm" width="155" height="235" style="opacity:.1"><use href="#nw" width="155" height="235" color="#d4a43a"/></svg>
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:22px;text-align:center">
+    <p class="eyebrow ani" style="font-size:18px">CodeSprouts 2026</p>
+    <h2 class="t-section ani" style="font-size:82px">Thank you,<br>hope you had fun!</h2>
+    <hr class="rule ani" style="width:240px">
+    <p class="ani dim" style="font-family:var(--mono);font-size:17px;letter-spacing:4px">ENCRYPTION · SOCIAL ENGINEERING · HASHING</p>
+  </div>
+  <div class="sn">28 / 28</div>
+</div>
+
+</div>
+
+<div id="nav">
+  <button class="nbtn" id="prevBtn" onclick="prev()">&#8592;</button>
+  <div id="pbar"><div id="pfill"></div></div>
+  <span id="counter">01 / 28</span>
+  <button class="nbtn" id="nextBtn" onclick="next()">&#8594;</button>
+</div>
+<div id="hint">← → ARROW KEYS &nbsp;·&nbsp; SPACE TO ADVANCE</div>
+
+<script>
+const cur=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
+const slides=[...document.querySelectorAll('.slide')];
+const TOTAL=slides.length;let ci=0;
+function goTo(n){
+  if(n<0||n>=TOTAL)return;
+  slides[ci].classList.remove('active');slides[ci].classList.add('exit');
+  const old=ci;setTimeout(()=>slides[old].classList.remove('exit'),600);
+  ci=n;slides[ci].classList.add('active');
+  document.getElementById('prevBtn').disabled=ci===0;
+  document.getElementById('nextBtn').disabled=ci===TOTAL-1;
+  document.getElementById('counter').textContent=String(ci+1).padStart(2,'0')+' / '+String(TOTAL).padStart(2,'0');
+  document.getElementById('pfill').style.width=((ci+1)/TOTAL*100)+'%';
+  if(ci===8)buildTable('cipherDemo','');
+  if(ci===9)buildTable('cipherLive','');
+}
+const next=()=>goTo(ci+1);
+const prev=()=>goTo(ci-1);
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}
+  if(e.key==='ArrowLeft'){e.preventDefault();prev();}
+});
+const AZ='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+function cipherKey(kw){
+  const seen=new Set(),out=[];
+  for(const c of kw.toUpperCase().replace(/[^A-Z]/g,''))if(!seen.has(c)){out.push(c);seen.add(c);}
+  for(const c of AZ)if(!seen.has(c)){out.push(c);seen.add(c);}
+  return out;
+}
+function buildTable(id,word){
+  const el=document.getElementById(id);if(!el)return;
+  const key=cipherKey('KEYWORD'),kwS=new Set('KEYWORD'.split(''));
+  const hl=word.toUpperCase().replace(/[^A-Z]/g,'').split('').map(c=>AZ.indexOf(c)).filter(i=>i>=0);
+  const mkRow=(cells,clsFn)=>{
+    const row=document.createElement('div');row.className='cipher-row';
+    cells.forEach((c,i)=>{const cell=document.createElement('div');cell.className='c-cell '+clsFn(c,i);if(hl.includes(i))cell.classList.add('lit');cell.textContent=c;row.appendChild(cell);});
+    return row;
+  };
+  el.innerHTML='';
+  el.appendChild(mkRow(AZ,()=>'c-plain'));
+  el.appendChild(mkRow(key,c=>kwS.has(c)?'c-kw':'c-encoded'));
+}
+function doEncrypt(){
+  const w=document.getElementById('encInp').value.trim();if(!w)return;
+  const key=cipherKey('KEYWORD');
+  const enc=w.toUpperCase().replace(/[^A-Z]/g,'').split('').map(c=>{const i=AZ.indexOf(c);return i>=0?key[i]:c;}).join('');
+  document.getElementById('encOut').textContent=w.toUpperCase()+'  →  '+enc;
+  buildTable('cipherLive',w);
+}
+function clearEnc(){
+  document.getElementById('encInp').value='';document.getElementById('encOut').textContent='';
+  buildTable('cipherLive','');
+}
+document.getElementById('encInp')?.addEventListener('keydown',e=>{if(e.key==='Enter')doEncrypt();e.stopPropagation();});
+function doHash(){
+  const t=document.getElementById('hashInp').value;if(!t.trim())return;
+  const clean=t.toUpperCase().replace(/[^A-Z]/g,'');
+  const sum=clean.split('').reduce((a,c)=>a+(c.charCodeAt(0)-64),0);
+  const hash=sum%100;
+  document.getElementById('hashOut').innerHTML=
+    '<div class="hbox"><label>LETTERS</label><span>'+( clean||'—')+'</span></div>'+
+    '<div class="hbox"><label>SUM</label><span>'+sum+'</span></div>'+
+    '<div class="hbox"><label>HASH (sum % 100)</label><span style="font-size:24px;font-weight:700">'+hash+'</span></div>';
+}
+document.getElementById('hashInp')?.addEventListener('keydown',e=>{if(e.key==='Enter')doHash();e.stopPropagation();});
+function quiz(gid,btn,correct){
+  const grp=document.getElementById(gid);
+  grp.querySelectorAll('.qopt').forEach(b=>b.disabled=true);
+  const fb=document.getElementById(gid+'-fb');
+  if(correct){btn.classList.add('correct');fb.style.color='#56d364';fb.textContent='✓  Correct! Well done, Ghost Needle.';}
+  else{btn.classList.add('wrong');grp.querySelectorAll('.qopt').forEach(b=>{if(b.onclick?.toString().includes('true'))b.classList.add('correct');});fb.style.color='#e05548';fb.textContent='✗  Not quite — the correct answer is highlighted.';}
+}
+function fcClick(n){
+  for(let i=1;i<=3;i++){const el=document.getElementById('fc'+i);el.classList.remove('active-step','done-step');if(i<n)el.classList.add('done-step');if(i===n)el.classList.add('active-step');}
+  if(n===3)setTimeout(()=>{for(let i=1;i<=3;i++)document.getElementById('fc'+i).classList.add('done-step');},2000);
+}
+function hfcClick(n){
+  for(let i=1;i<=3;i++){const el=document.getElementById('hfc'+i);el.classList.remove('active-step','done-step');if(i<n)el.classList.add('done-step');if(i===n)el.classList.add('active-step');}
+  if(n===3)setTimeout(()=>{for(let i=1;i<=3;i++)document.getElementById('hfc'+i).classList.add('done-step');},2000);
+}
+function revealHash(fnId,outId){
+  const fn=document.getElementById(fnId),out=document.getElementById(outId);
+  fn.style.background='rgba(100,120,200,.2)';fn.style.borderColor='rgba(100,120,200,.6)';
+  const inner=fn.innerHTML;fn.innerHTML=inner.replace('(click to hash)','✓ hashed!');
+  out.style.opacity='1';
+}
+goTo(0);
+setTimeout(()=>buildTable('cipherDemo',''),80);
+</script>
+</body>
+</html>
