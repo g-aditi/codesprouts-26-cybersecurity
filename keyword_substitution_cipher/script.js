@@ -237,6 +237,12 @@ submitBtn.addEventListener('click', () => {
     icon.textContent = '🏮'; title.className = 'result-title win'; title.textContent = 'Mission Accomplished!';
     msg.textContent = 'Ghost Needle received the decoded message. Raiders redirected to Yin Vault at 31 Pale Moon Alley, Sector 9. Yang Vault is safe. The Dragon Scroll is secure. White Lotus is proud.';
     retryBtn.textContent = ''; submitBtn.disabled = true; launchConfetti();
+    // ── Phase 1 flag display ────────────────────────────────────────────────
+    const phase1Flag = 'flag{gh0st_n33dl3}';
+    const flagWrap1 = document.createElement('div');
+    flagWrap1.style.cssText = 'margin-top:22px;display:flex;flex-direction:column;align-items:center;gap:12px;width:100%';
+    flagWrap1.innerHTML = `<p style="margin:0;font-size:12px;letter-spacing:2px;color:rgba(220,215,205,.45);font-family:monospace">YOUR FLAG FOR PHASE 2</p><div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.4);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:12px 20px"><code style="font-family:monospace;font-size:17px;color:#c9a84c;letter-spacing:2px">${phase1Flag}</code><button onclick="navigator.clipboard.writeText('${phase1Flag}');this.textContent='\u2713 Copied';setTimeout(()=>this.textContent='Copy',1800)" style="background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(220,215,205,.6);padding:4px 12px;border-radius:5px;cursor:pointer;font-size:12px;font-family:monospace">Copy</button></div><a href="../phishing/phishing.html" style="margin-top:6px;padding:11px 30px;background:#c0392b;color:#fff;border-radius:8px;text-decoration:none;font-family:monospace;font-size:13px;letter-spacing:1px;display:inline-block">Proceed to Phase 2 →</a>`;
+    resultCard.appendChild(flagWrap1);
   } else {
     resultCard.className = 'result-card fail-card'; icon.textContent = '☠️';
     title.className = 'result-title lose'; title.textContent = 'Transmission Corrupted';

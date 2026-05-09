@@ -261,6 +261,12 @@ submitBtn.addEventListener('click', () => {
     document.getElementById('result-msg').textContent =
       'The message is suspicious enough to be phishing, but not so exaggerated that it looks like obvious spam.';
     launchConfetti();
+    // ── Phase 2 flag display ────────────────────────────────────────────────
+    const phase2Flag = 'flag{sh4d0w_1nk}';
+    const flagWrap2 = document.createElement('div');
+    flagWrap2.style.cssText = 'margin-top:22px;display:flex;flex-direction:column;align-items:center;gap:12px;width:100%';
+    flagWrap2.innerHTML = `<p style="margin:0;font-size:12px;letter-spacing:2px;color:rgba(220,215,205,.45);font-family:monospace">YOUR FLAG FOR PHASE 3</p><div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.4);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:12px 20px"><code style="font-family:monospace;font-size:17px;color:#c9a84c;letter-spacing:2px">${phase2Flag}</code><button onclick="navigator.clipboard.writeText('${phase2Flag}');this.textContent='\u2713 Copied';setTimeout(()=>this.textContent='Copy',1800)" style="background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(220,215,205,.6);padding:4px 12px;border-radius:5px;cursor:pointer;font-size:12px;font-family:monospace">Copy</button></div><a href="../hash-collision-package/hash-collision-scroll.html" style="margin-top:6px;padding:11px 30px;background:#c0392b;color:#fff;border-radius:8px;text-decoration:none;font-family:monospace;font-size:13px;letter-spacing:1px;display:inline-block">Proceed to Phase 3 →</a>`;
+    resultCard.appendChild(flagWrap2);
   } else {
     resultCard.className = 'result-card fail-card';
     document.getElementById('result-icon').textContent = '⚠️';
@@ -315,6 +321,32 @@ function launchConfetti() {
     t.innerHTML = theme === 'dark'
       ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`
       : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`;
+  });
+})();
+
+// ── Phase Gate ───────────────────────────────────────────────────────────────
+(function () {
+  const PHASE_FLAG  = 'flag{gh0st_n33dl3}';
+  const STORAGE_KEY = 'wl_phase2_unlocked';
+  const gate        = document.getElementById('mission-gate');
+  if (!gate) return;
+  function unlockGate() {
+    gate.style.opacity    = '0';
+    gate.style.transition = 'opacity 0.4s';
+    setTimeout(() => { gate.style.display = 'none'; }, 400);
+  }
+  if (sessionStorage.getItem(STORAGE_KEY) === '1') { unlockGate(); return; }
+  document.getElementById('gate-submit').addEventListener('click', () => {
+    const val = document.getElementById('gate-input').value.trim().toLowerCase().replace(/\s/g, '');
+    if (val === PHASE_FLAG) {
+      sessionStorage.setItem(STORAGE_KEY, '1');
+      unlockGate();
+    } else {
+      document.getElementById('gate-error').textContent = 'Incorrect flag — check your Phase 1 result.';
+    }
+  });
+  document.getElementById('gate-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('gate-submit').click();
   });
 })();
 
