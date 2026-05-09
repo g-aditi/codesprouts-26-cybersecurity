@@ -35,3 +35,5 @@ Once you've found the right combination, the Dragon Scroll in Yang Vault is safe
 ***
 
 Thank you for playing the Cyber Ninja Mission and saving the Dragon Scroll from the evil Shadow Claw clan!
+
+Thanks!
