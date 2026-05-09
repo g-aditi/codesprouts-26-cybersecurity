@@ -8,6 +8,8 @@ In all 3 challenges, you will be on the lookout for a flag that looks something 
 
 Once you complete each challenge, a window will pop up with the flag on your browser. Submit this flag in the pwn.college interface to complete the challenge.
 
+CHANGE THIS
+
 ## Confidentiality: Decrypting White Lotus's Message
 
 The White Lotus clan has sent you an urgent encrypted message, but the words make no sense at first glance. You know the message was encrypted using a **Keyword Substitution Cipher**. Your task is to reconstruct the cipher keyword and decrypt the message.
