@@ -64,8 +64,8 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
 .scanline{position:absolute;top:0;left:0;right:0;height:2px;background:rgba(168,200,144,.1);animation:scan 5s linear infinite;pointer-events:none}
 @keyframes scan{from{transform:translateY(0)}to{transform:translateY(100vh)}}
 .cipher-wrap{display:flex;flex-direction:column;gap:5px}
-.cipher-row{display:flex;gap:3px}
-.c-cell{width:37px;height:37px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;border-radius:5px;transition:all .2s}
+.cipher-row{display:flex;gap:4px}
+.c-cell{width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:28px;font-weight:700;border-radius:5px;transition:all .2s}
 .c-plain{background:rgba(212,164,58,.12);color:var(--gold-lt);border:1px solid rgba(212,164,58,.25)}
 .c-encoded{background:rgba(192,57,43,.18);color:#f0a090;border:1px solid rgba(192,57,43,.3)}
 .c-kw{background:rgba(46,160,80,.2);color:#80d890;border:1px solid rgba(46,160,80,.35)}
@@ -180,7 +180,6 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     </div>
     <p class="ani dim sm" style="font-style:italic;letter-spacing:2px">Encryption · Social Engineering · Hashing</p>
   </div>
-  <div class="sn">01 / 28</div>
 </div>
 
 <!-- P02 SOMETHING IS AMISS -->
@@ -193,7 +192,6 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     <h2 class="t-section ani" style="font-size:68px">Something is Amiss<br>in White Lotus Village</h2>
     <p class="lead ani dim" style="font-size:31px">The mission begins…</p>
   </div>
-  <div class="sn">02 / 28</div>
 </div>
 
 <!-- P03 BACKSTORY -->
@@ -201,13 +199,12 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
   <div class="bg-kanji">龍</div>
   <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
   <h2 class="t-slide ani">There is tension in the air…</h2>
-  <div style="display:flex;flex-direction:column;gap:22px;flex:1;justify-content:center">
-    <p class="ani" style="font-size:40px">The <span class="hl">White Lotus clan</span>, the ninja group of justice, has just received some concerning intel:</p>
-    <p class="ani" style="font-size:40px">The evil <span class="hlr">Shadow Claw clan</span> is scheming to steal <span class="hl">The Dragon Scroll</span> from one of the White Lotus vaults.</p>
-    <p class="ani dim" style="font-size:36px">The Dragon Scroll contains directions to the <em>Fountain of Eternal Youth</em> — entrusted to White Lotus because anyone else would misuse it.</p>
-    <p class="ani" style="font-size:40px">To foil these evil schemes, White Lotus has a ninja working undercover in Shadow Claw: <span class="hl">Ghost Needle</span>.</p>
+  <div style="display:flex;flex-direction:column;gap:22px;flex:1;justify-content:space-evenly;padding-top:20px;padding-bottom:20px;max-width:75vw;">
+    <p class="ani" style="font-size:32px">The <span class="hl">White Lotus clan</span>, the ninja group of justice, has just received some concerning intel:</p>
+    <p class="ani" style="font-size:32px">The evil <span class="hlr">Shadow Claw clan</span> is scheming to steal <span class="hl">The Dragon Scroll</span> from one of the White Lotus vaults.</p>
+    <p class="ani dim" style="font-size:28px">The Dragon Scroll contains directions to the <em>Fountain of Eternal Youth</em> — entrusted to White Lotus because anyone else would misuse it.</p>
+    <p class="ani" style="font-size:32px">To foil these evil schemes, White Lotus has a ninja working undercover in Shadow Claw: <span class="hl">Ghost Needle</span>.</p>
   </div>
-  <div class="sn">03 / 28</div>
 </div>
 
 <!-- P04 YOU ARE GHOST NEEDLE -->
@@ -220,10 +217,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     <hr class="rule ani" style="width:240px">
     <p class="lead ani dim" style="font-size:36px">The safety of the Dragon Scroll<br>is in your hands.</p>
   </div>
-  <div class="sn">04 / 28</div>
 </div>
 
-<!-- P05 DUTIES x3 — icons + text, no boxes, centered -->
+<!-- P05 DUTIES x3 -->
 <div class="slide" data-i="4">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
@@ -247,10 +243,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
       </div>
     </div>
   </div>
-  <div class="sn">05 / 28</div>
 </div>
 
-<!-- P06 SECTION 01 — non-header +10pt -->
+<!-- P06 SECTION 01 -->
 <div class="slide" data-i="5">
   <div class="bg-kanji">任</div>
   <div class="t-number">01</div>
@@ -260,18 +255,17 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     <h2 class="t-section ani">Ghost Needle's<br>Secret Briefing</h2>
     <p class="lead ani dim" style="font-size:36px">A message arrives… but something's wrong</p>
   </div>
-  <div class="sn">06 / 28</div>
 </div>
 
-<!-- P07 ENCRYPTED MESSAGE — bottom text +10pt -->
+<!-- P07 ENCRYPTED MESSAGE -->
 <div class="slide" data-i="6">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="130" height="200" style="bottom:72px"><use href="#nw" width="130" height="200" color="#d4a43a"/></svg>
-  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px">
-    <h2 class="t-slide ani" style="margin-bottom:0;font-size:34px">You receive a message from White Lotus…</h2>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:64px">
+    <h2 class="t-slide ani" style="margin-top:20px;font-size:34px">You receive a message from White Lotus…</h2>
     <span class="ani" style="font-family:var(--mono);font-size:12px;color:var(--gold-dim);letter-spacing:2px">INCOMING</span>
   </div>
-  <div class="term ani" style="flex:1">
+  <div class="term ani" style="flex:1;font-size:20px;overflow:hidden;">
     <div class="scanline"></div>
     ENJPQ GIIRDI, <span class="tg">QNAP AP WNAQI DJQTP.</span> IXIUTQI JORIO ZIOJ JG QNI KJTOQIIGQN.<br><br>
     PNSRJW UDSW NSP UJGKAOFIR LDSGP QJ OSAR YSGE VSTDQ. YJTO BJH: RJ GJQ DIQ QNIF OISUN AQ.<br><br>
@@ -279,26 +273,30 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     <span class="tr">QOTPQ ZIOJ LIJLDI AGPARI PNSRJW UDSW.</span> QNI ROSEJG PUOJDD FTPQ OIFSAG AG YSGE VSTDQ.<br><br>
     <span class="tg">WNAQI DJQTP JTQ.</span>
   </div>
-  <p class="ani" style="margin-top:14px;font-size:31px;color:var(--gold-lt)">…but these words don't seem to have any immediate meaning!</p>
-  <div class="sn">07 / 28</div>
+  <p class="ani" style="margin-top:64px;margin-bottom:40px;align-self:flex-end;font-size:34px;color:var(--gold-lt)">…but these words don't seem to have any immediate meaning!</p>
 </div>
 
-<!-- P08 ENCRYPTION CONCEPT — renamed + bigger boxes +10pt -->
+<!-- P08 ENCRYPTION CONCEPT -->
 <div class="slide" data-i="7">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
   <h2 class="t-slide ani">Encryption</h2>
-  <div class="cols2" style="flex:1;gap:24px">
-    <div style="display:flex;flex-direction:column;gap:20px">
-      <div class="card ani" style="padding:34px 34px;flex:1"><h3 style="font-size:22px">What is Encryption?</h3><p style="font-size:24px">Encryption creates a <span class="hl">secret language</span> from normal text so only authorised people can read it.</p></div>
-      <div class="card ani" style="padding:34px 34px;flex:1"><h3 style="font-size:22px">What Can Encryption Do?</h3><p style="font-size:24px">Replace one word with another, swap sentences… and so on.</p></div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:22px;max-width:820px;padding-bottom:48px">
+    <div class="ani" style="display:flex;flex-direction:column;gap:8px">
+      <p style="font-size:26px"><span class="hl">Encryption</span> is the process of converting a message into a secret form so that only authorised people can read it.</p>
+      <p style="font-size:22px;color:var(--text-dim)">A code could replace one word with another, swap sentences around, or rearrange individual letters.</p>
     </div>
-    <div style="display:flex;flex-direction:column;gap:20px">
-      <div class="card ani" style="padding:34px 34px;flex:1"><h3 style="font-size:22px">What is a Cipher?</h3><p style="font-size:24px">A <span class="hl">cipher</span> rearranges or substitutes letters and digits to disguise the message.</p></div>
-      <div class="card ani" style="padding:34px 34px;flex:1;border-color:var(--red-dim);background:rgba(192,57,43,.08)"><h3 style="font-size:22px;color:var(--red-lt)">Key Insight</h3><p style="font-size:24px">White Lotus sent you a <strong>secret, encrypted message!</strong> You need to crack it.</p></div>
+    <hr class="rule ani" style="width:340px">
+    <div class="ani" style="display:flex;flex-direction:column;gap:8px">
+      <p style="font-size:26px">A <span class="hl">cipher</span> is a specific type of encryption that works at the letter level, substituting or rearranging each character according to a fixed rule.</p>
+      <p style="font-size:22px;color:var(--text-dim)">For example: every <span class="mono-tag">A</span> becomes <span class="mono-tag">K</span>, every <span class="mono-tag">B</span> becomes <span class="mono-tag">E</span> … and so on.</p>
+    </div>
+    <hr class="rule ani" style="width:340px">
+    <div class="ani" style="display:flex;gap:18px;align-items:flex-start;background:rgba(192,57,43,.08);border:1px solid var(--red-dim);border-radius:10px;padding:24px 28px">
+      <span style="font-size:34px;flex-shrink:0">📡</span>
+      <p style="font-size:26px;line-height:1.6">White Lotus just sent you an encrypted message. Right now it looks like complete gibberish. <span class="hl">Let's learn how to crack it.</span></p>
     </div>
   </div>
-  <div class="sn">08 / 28</div>
 </div>
 
 <!-- P09 HOW TO READ — interactive flowchart -->
@@ -309,21 +307,20 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
   <div style="flex:1;display:flex;flex-direction:column;gap:14px;overflow:hidden">
     <p class="ani" style="font-size:20px;color:var(--text-dim)">There are many ways to encrypt a message. This one is a <span class="hl">keyword substitution cipher</span>. Click each step:</p>
     <div style="display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center" class="ani">
-      <div class="fc-box" id="fc1" onclick="fcClick(1)" style="min-width:220px;font-size:18px"><span class="fc-num">STEP 1</span>Write down the alphabet<div class="fc-detail">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</div></div>
+      <div class="fc-box" id="fc1" onclick="fcClick(1)" style="min-width:220px;font-size:18px;min-height:110px;display:flex;flex-direction:column;justify-content:center;align-items:center"><span class="fc-num">STEP 1</span>Write down the alphabet</div>
       <div class="fc-arrow">→</div>
-      <div class="fc-box" id="fc2" onclick="fcClick(2)" style="min-width:240px;font-size:18px"><span class="fc-num">STEP 2</span>Write keyword below<br><span style="font-size:14px;color:var(--text-dim)">(omit duplicate letters)</span><div class="fc-detail" style="color:#80d890">Keyword: KEYWORD<br>K E Y W O R D A B C F…</div></div>
+      <div class="fc-box" id="fc2" onclick="fcClick(2)" style="min-width:240px;font-size:18px;min-height:110px;display:flex;flex-direction:column;justify-content:center;align-items:center"><span class="fc-num">STEP 2</span>Write keyword below<br><span style="font-size:14px;color:var(--text-dim)">(omit duplicate letters)</span></div>
       <div class="fc-arrow">→</div>
-      <div class="fc-box" id="fc3" onclick="fcClick(3)" style="min-width:240px;font-size:18px"><span class="fc-num">STEP 3</span>Fill remaining unused letters<div class="fc-detail">Continue with all letters not already in the keyword row.</div></div>
+      <div class="fc-box" id="fc3" onclick="fcClick(3)" style="min-width:240px;font-size:18px;min-height:110px;display:flex;flex-direction:column;justify-content:center;align-items:center"><span class="fc-num">STEP 3</span>Fill remaining unused letters</div>
     </div>
     <div class="ani">
-      <p style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--gold-dim);margin-bottom:8px">FULL CIPHER TABLE (keyword: KEYWORD):</p>
+      <p style="font-family:var(--mono);font-size:15px;letter-spacing:3px;color:var(--gold-lt);margin-bottom:8px;font-weight:700">FULL CIPHER TABLE (keyword: KEYWORD):</p>
       <div id="cipherDemo" class="cipher-wrap"></div>
     </div>
   </div>
-  <div class="sn">09 / 28</div>
 </div>
 
-<!-- P10 INTERACTIVE CIPHER +10pt -->
+<!-- P10 INTERACTIVE CIPHER -->
 <div class="slide" data-i="9">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
@@ -332,19 +329,17 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     <p style="font-size:31px;margin-bottom:12px">Using keyword <span class="mono-tag">KEYWORD</span>, encrypt any word:</p>
     <div class="irow">
       <input class="iinput" id="encInp" maxlength="12" placeholder="TYPE A WORD" spellcheck="false">
-      <button class="ibtn" onclick="doEncrypt()">ENCRYPT ↯</button>
-      <button class="ibtn" style="opacity:.55" onclick="clearEnc()">CLEAR</button>
+      <!-- <button class="ibtn" onclick="doEncrypt()">ENCRYPT ↯</button> -->
+      <button class="ibtn" id="clearBtn" style="opacity:.25;pointer-events:none" onclick="clearEnc()">CLEAR</button>
     </div>
     <div class="iresult" id="encOut"></div>
   </div>
   <div class="ani" style="flex:1;overflow:hidden">
     <div id="cipherLive" class="cipher-wrap" style="transform:scale(.96);transform-origin:top left"></div>
   </div>
-  <p class="ani dim sm" style="margin-top:8px;font-size:19px">Matching cells highlight gold. Try: <span class="mono-tag">NINJA</span> → <span class="mono-tag">IBICK</span></p>
-  <div class="sn">10 / 28</div>
 </div>
 
-<!-- P11 MISSION 1 — darker bg +10pt -->
+<!-- P11 MISSION 1 -->
 <div class="slide" data-i="10" style="background:#050c16">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="148" height="225"><use href="#nw" width="148" height="225" color="#d4a43a"/></svg>
@@ -357,10 +352,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     <hr class="rule" style="margin:8px 0;opacity:.35">
     <div class="good-luck ani">Good luck, Ghost Needle!</div>
   </div>
-  <div class="sn">11 / 28</div>
 </div>
 
-<!-- P12 SECTION 02 +10pt -->
+<!-- P12 SECTION 02 -->
 <div class="slide" data-i="11">
   <div class="bg-kanji">任</div>
   <div class="t-number">02</div>
@@ -370,10 +364,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     <h2 class="t-section ani">Red Fang, Raiders,<br>and a Wild Goose Chase</h2>
     <p class="lead ani dim" style="font-size:36px">Time to play pretend…</p>
   </div>
-  <div class="sn">12 / 28</div>
 </div>
 
-<!-- P13 DECRYPTED MESSAGE +10pt -->
+<!-- P13 DECRYPTED MESSAGE -->
 <div class="slide" data-i="12">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="130" height="200" style="bottom:72px"><use href="#nw" width="130" height="200" color="#d4a43a"/></svg>
@@ -389,10 +382,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     <span class="tr">TRUST ZERO PEOPLE INSIDE SHADOW CLAW.</span> THE DRAGON SCROLL MUST REMAIN IN YANG VAULT. <span class="tr">NO EXCEPTIONS.</span> — WHITE LOTUS OUT.
   </div>
   <p class="ani" style="margin-top:24px;font-size:35px;color:var(--gold-lt)">…send the Shadow Claw Raiders on a wild goose chase!</p>
-  <div class="sn">13 / 28</div>
 </div>
 
-<!-- P14 DUTIES ch2 — no boxes, centered stacked +10pt -->
+<!-- P14 DUTIES ch2 -->
 <div class="slide" data-i="13">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
@@ -409,10 +401,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
       <p style="font-size:32px;color:var(--text-dim);white-space:nowrap">Compose an email sending Shadow Claw Ninjas to <span class="hl">Yin Vault</span> — away from the real Dragon Scroll.</p>
     </div>
   </div>
-  <div class="sn">14 / 28</div>
 </div>
 
-<!-- P15 SOCIAL ENGINEERING — bigger boxes, centered, darker +10pt -->
+<!-- P15 SOCIAL ENGINEERING -->
 <div class="slide" data-i="14" style="background:#060a14">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
@@ -428,10 +419,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
       <span style="font-size:40px">🎣</span><div><h3 style="font-size:22px;color:var(--red-lt)">Phishing</h3><p style="font-size:25px">The most common form — send a fake message that looks real, get the target to click, share, or obey.</p></div>
     </div>
   </div>
-  <div class="sn">15 / 28</div>
 </div>
 
-<!-- P16 PHISHING COMPONENTS — equal boxes, darker +10pt -->
+<!-- P16 PHISHING COMPONENTS -->
 <div class="slide" data-i="15" style="background:#060a14">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="130" height="200" style="bottom:72px"><use href="#nw" width="130" height="200" color="#d4a43a"/></svg>
@@ -446,10 +436,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
       <div class="phish-item ani" style="background:#090f20;flex-direction:column;align-items:center;gap:10px;text-align:center;max-height:calc(100% - 20px)"><span class="phish-n" style="width:54px;height:54px;border-radius:50%;background:var(--gold);color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;flex-shrink:0">4</span><div><div class="phish-lbl" style="font-size:27px">Shortened / Suspicious URLs</div><div class="phish-desc" style="font-size:30px">bitly.com/c0mpanyreset — hides the real destination from the victim</div></div></div>
     </div>
   </div>
-  <div class="sn">16 / 28</div>
 </div>
 
-<!-- P17 MISSION 2 — darker +10pt -->
+<!-- P17 MISSION 2 -->
 <div class="slide" data-i="16" style="background:#050c16">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="148" height="225"><use href="#nw" width="148" height="225" color="#d4a43a"/></svg>
@@ -462,10 +451,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     <hr class="rule" style="margin:8px 0;opacity:.35">
     <div class="good-luck ani">Good luck, Ghost Needle!</div>
   </div>
-  <div class="sn">17 / 28</div>
 </div>
 
-<!-- P18 SECTION 03 +10pt -->
+<!-- P18 SECTION 03 -->
 <div class="slide" data-i="17">
   <div class="bg-kanji">任</div>
   <div class="t-number">03</div>
@@ -475,10 +463,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     <h2 class="t-section ani">Fountain of Youth<br>or Fountain of Tooth?</h2>
     <p class="lead ani dim" style="font-size:36px">Forge the scroll — but don't get caught</p>
   </div>
-  <div class="sn">18 / 28</div>
 </div>
 
-<!-- P19 BUT NOW WHAT +10pt -->
+<!-- P19 BUT NOW WHAT -->
 <div class="slide" data-i="18">
   <div class="bg-kanji">偽</div>
   <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
@@ -488,10 +475,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     <p class="lead ani" style="font-size:36px">The Dragon Scroll contains the address to the <span class="hl">Fountain of Youth.</span></p>
     <p class="lead ani" style="font-size:32px;color:var(--gold-lt)">What if we gave the bad guys the address to the <span class="hlr">Fountain of Tooth?</span></p>
   </div>
-  <div class="sn">19 / 28</div>
 </div>
 
-<!-- P20 DUTIES ch3 — no boxes, centered stacked +10pt -->
+<!-- P20 DUTIES ch3 -->
 <div class="slide" data-i="19">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
@@ -508,10 +494,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
       <p style="font-size:24px">The Shadow Clan checks the <span class="hl">message hash</span> to detect tampering — your fake must match!</p>
     </div>
   </div>
-  <div class="sn">20 / 28</div>
 </div>
 
-<!-- P21 BUT WAIT — no 'Warning', +10pt -->
+<!-- P21 BUT WAIT -->
 <div class="slide" data-i="20">
   <div class="bg-kanji">任</div>
   <div class="end-glow" style="width:500px;height:500px;top:50%;left:55%;transform:translate(-50%,-50%)"></div>
@@ -522,10 +507,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     <p class="lead ani dim" style="font-size:36px">The Shadow Clan knows if the scroll has been tampered with!</p>
     <p class="lead ani dim" style="font-size:33px">As Ghost Needle, you know they use <span class="hl">Ninjutsu</span>:<br><em>Ninja math tricks to represent text with numbers uniquely.</em></p>
   </div>
-  <div class="sn">21 / 28</div>
 </div>
 
-<!-- P22 HASHING — centered, darker, hash hidden until clicked +10pt -->
+<!-- P22 HASHING -->
 <div class="slide" data-i="21" style="background:#060a14">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
@@ -555,10 +539,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
       <div class="card" style="background:#090f20;padding:26px 28px"><h3 style="font-size:21px">Small Change → Different Hash</h3><p style="font-size:23px">Even one character changes everything</p></div>
     </div>
   </div>
-  <div class="sn">22 / 28</div>
 </div>
 
-<!-- P23 SIMPLE HASH + interactive flowchart +10pt -->
+<!-- P23 SIMPLE HASH -->
 <div class="slide" data-i="22">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="130" height="200" style="bottom:72px"><use href="#nw" width="130" height="200" color="#d4a43a"/></svg>
@@ -591,10 +574,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
       <div class="hrow" id="hashOut"></div>
     </div>
   </div>
-  <div class="sn">23 / 28</div>
 </div>
 
-<!-- P24 MISSION 3 — darker +10pt -->
+<!-- P24 MISSION 3 -->
 <div class="slide" data-i="23" style="background:#050c16">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="148" height="225"><use href="#nw" width="148" height="225" color="#d4a43a"/></svg>
@@ -607,10 +589,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     <hr class="rule" style="margin:8px 0;opacity:.35">
     <div class="good-luck ani">Good luck, Ghost Needle!</div>
   </div>
-  <div class="sn">24 / 28</div>
 </div>
 
-<!-- P25 QUIZ ENCRYPTION +10pt -->
+<!-- P25 QUIZ ENCRYPTION -->
 <div class="slide" data-i="24">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
@@ -636,10 +617,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     </div>
     <div class="qfb" id="q2-fb"></div>
   </div>
-  <div class="sn">25 / 28</div>
 </div>
 
-<!-- P26 QUIZ PHISHING+HASHING +10pt -->
+<!-- P26 QUIZ PHISHING+HASHING -->
 <div class="slide" data-i="25">
   <div class="bg-kanji">任</div>
   <svg class="ninja-wm" width="140" height="215"><use href="#nw" width="140" height="215" color="#d4a43a"/></svg>
@@ -663,10 +643,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     </div>
     <div class="qfb" id="q4-fb"></div>
   </div>
-  <div class="sn">26 / 28</div>
 </div>
 
-<!-- P27 GOOD JOB +10pt -->
+<!-- P27 GOOD JOB -->
 <div class="slide" data-i="26">
   <div class="bg-kanji">完</div>
   <svg class="ninja-wm" width="155" height="235"><use href="#nw" width="155" height="235" color="#d4a43a"/></svg>
@@ -680,10 +659,9 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
       <li style="font-size:26px">Protect your clan — and your data</li>
     </ul>
   </div>
-  <div class="sn">27 / 28</div>
 </div>
 
-<!-- P28 THANK YOU +10pt -->
+<!-- P28 THANK YOU -->
 <div class="slide" data-i="27">
   <div class="bg-kanji">任</div>
   <div class="end-glow" style="width:750px;height:750px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
@@ -700,7 +678,6 @@ p,li{font-size:22px;line-height:1.65;color:var(--text)}
     <hr class="rule ani" style="width:240px">
     <p class="ani dim" style="font-family:var(--mono);font-size:17px;letter-spacing:4px">ENCRYPTION · SOCIAL ENGINEERING · HASHING</p>
   </div>
-  <div class="sn">28 / 28</div>
 </div>
 
 </div>
@@ -727,7 +704,7 @@ function goTo(n){
   document.getElementById('nextBtn').disabled=ci===TOTAL-1;
   document.getElementById('counter').textContent=String(ci+1).padStart(2,'0')+' / '+String(TOTAL).padStart(2,'0');
   document.getElementById('pfill').style.width=((ci+1)/TOTAL*100)+'%';
-  if(ci===8)buildTable('cipherDemo','');
+  if(ci===8){document.getElementById('cipherDemo').innerHTML='';}
   if(ci===9)buildTable('cipherLive','');
 }
 const next=()=>goTo(ci+1);
@@ -743,42 +720,167 @@ function cipherKey(kw){
   for(const c of AZ)if(!seen.has(c)){out.push(c);seen.add(c);}
   return out;
 }
+
+// --- Animated cipher table helpers (cipherDemo, slide 8) ---
+const _tableTimers=[];
+function buildRow1(id,word){
+  const el=document.getElementById(id);if(!el)return;
+  _tableTimers.forEach(clearTimeout);_tableTimers.length=0;
+  const old2=el.querySelector('.cipher-row-2');if(old2)old2.remove();
+  let row1=el.querySelector('.cipher-row-1');
+  if(!row1){row1=document.createElement('div');row1.className='cipher-row cipher-row-1';el.appendChild(row1);}
+  row1.innerHTML='';
+  const hl=word.toUpperCase().replace(/[^A-Z]/g,'').split('').map(c=>AZ.indexOf(c)).filter(i=>i>=0);
+  AZ.forEach((c,i)=>{
+    const t=setTimeout(()=>{
+      const c1=document.createElement('div');
+      c1.className='c-cell c-plain'+(hl.includes(i)?' lit':'');
+      c1.textContent=c;row1.appendChild(c1);
+    },i*35);
+    _tableTimers.push(t);
+  });
+}
+function buildRow2Keyword(id,word){
+  const el=document.getElementById(id);if(!el)return;
+  _tableTimers.forEach(clearTimeout);_tableTimers.length=0;
+  const key=cipherKey('KEYWORD'),kwS=new Set('KEYWORD'.split(''));
+  const hl=word.toUpperCase().replace(/[^A-Z]/g,'').split('').map(c=>AZ.indexOf(c)).filter(i=>i>=0);
+  let row2=el.querySelector('.cipher-row-2');
+  if(!row2){row2=document.createElement('div');row2.className='cipher-row cipher-row-2';el.appendChild(row2);}
+  row2.innerHTML='';
+  AZ.forEach((c,i)=>{
+    const c2=document.createElement('div');
+    c2.className='c-cell c-kw'+(hl.includes(i)?' lit':'');
+    c2.style.opacity='0';
+    c2.textContent=key[i];
+    row2.appendChild(c2);
+    if(kwS.has(key[i])){
+      const t=setTimeout(()=>{c2.style.transition='opacity .15s';c2.style.opacity='1';},i*110);
+      _tableTimers.push(t);
+    }
+  });
+}
+function buildRow2Rest(id,word){
+  const el=document.getElementById(id);if(!el)return;
+  _tableTimers.forEach(clearTimeout);_tableTimers.length=0;
+  const key=cipherKey('KEYWORD'),kwS=new Set('KEYWORD'.split(''));
+  const hl=word.toUpperCase().replace(/[^A-Z]/g,'').split('').map(c=>AZ.indexOf(c)).filter(i=>i>=0);
+  const row2=el.querySelector('.cipher-row-2');if(!row2)return;
+  row2.innerHTML='';
+  let delay=0;
+  AZ.forEach((c,i)=>{
+    if(kwS.has(key[i])){
+      const c2=document.createElement('div');
+      c2.className='c-cell c-kw'+(hl.includes(i)?' lit':'');
+      c2.textContent=key[i];row2.appendChild(c2);
+    } else {
+      const c2=document.createElement('div');
+      c2.className='c-cell c-encoded'+(hl.includes(i)?' lit':'');
+      c2.style.opacity='0';
+      c2.textContent=key[i];row2.appendChild(c2);
+      const t=setTimeout(()=>{c2.style.transition='opacity .15s';c2.style.opacity='1';},delay*60);
+      _tableTimers.push(t);delay++;
+    }
+  });
+}
+
+// --- Static cipher table with live highlighting (cipherLive, slide 9) ---
 function buildTable(id,word){
   const el=document.getElementById(id);if(!el)return;
   const key=cipherKey('KEYWORD'),kwS=new Set('KEYWORD'.split(''));
   const hl=word.toUpperCase().replace(/[^A-Z]/g,'').split('').map(c=>AZ.indexOf(c)).filter(i=>i>=0);
+  const rows=[...el.querySelectorAll('.cipher-row')];
+  if(rows.length===2){
+    const cells0=[...rows[0].querySelectorAll('.c-cell')];
+    const cells1=[...rows[1].querySelectorAll('.c-cell')];
+    cells0.forEach((cell,i)=>{
+      const wasLit=cell.classList.contains('lit');
+      const nowLit=hl.includes(i);
+      cell.classList.toggle('lit',nowLit);
+      if(!wasLit&&nowLit){cell.style.transition='transform .1s ease';cell.style.transform='scale(1.45)';setTimeout(()=>{cell.style.transition='transform .2s ease';cell.style.transform='scale(1)';},120);}
+    });
+    cells1.forEach((cell,i)=>{
+      const wasLit=cell.classList.contains('lit');
+      const nowLit=hl.includes(i);
+      cell.classList.toggle('lit',nowLit);
+      if(!wasLit&&nowLit){cell.style.transition='transform .1s ease';cell.style.transform='scale(1.45)';setTimeout(()=>{cell.style.transition='transform .2s ease';cell.style.transform='scale(1)';},120);}
+    });
+    return;
+  }
   const mkRow=(cells,clsFn)=>{
     const row=document.createElement('div');row.className='cipher-row';
-    cells.forEach((c,i)=>{const cell=document.createElement('div');cell.className='c-cell '+clsFn(c,i);if(hl.includes(i))cell.classList.add('lit');cell.textContent=c;row.appendChild(cell);});
+    cells.forEach((c,i)=>{
+      const cell=document.createElement('div');
+      cell.className='c-cell '+clsFn(c,i);
+      if(hl.includes(i))cell.classList.add('lit');
+      cell.style.transition='transform .18s ease';
+      cell.textContent=c;
+      row.appendChild(cell);
+    });
     return row;
   };
   el.innerHTML='';
   el.appendChild(mkRow(AZ,()=>'c-plain'));
   el.appendChild(mkRow(key,c=>kwS.has(c)?'c-kw':'c-encoded'));
 }
+
 function doEncrypt(){
-  const w=document.getElementById('encInp').value.trim();if(!w)return;
+  const w=document.getElementById('encInp').value.trim();
   const key=cipherKey('KEYWORD');
   const enc=w.toUpperCase().replace(/[^A-Z]/g,'').split('').map(c=>{const i=AZ.indexOf(c);return i>=0?key[i]:c;}).join('');
-  document.getElementById('encOut').textContent=w.toUpperCase()+'  →  '+enc;
+  const out=document.getElementById('encOut');
+  const btn=document.getElementById('clearBtn');
+  if(!w){
+    out.textContent='';
+    buildTable('cipherLive','');
+    btn.style.opacity='.25';btn.style.pointerEvents='none';
+    return;
+  }
+  out.style.transition='none';out.style.opacity='0';out.style.transform='translateY(6px)';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    out.textContent=w.toUpperCase()+' → '+enc;
+    out.style.transition='opacity .2s ease, transform .2s ease';
+    out.style.opacity='1';out.style.transform='translateY(0)';
+  }));
   buildTable('cipherLive',w);
+  btn.style.opacity='1';btn.style.pointerEvents='auto';
 }
 function clearEnc(){
-  document.getElementById('encInp').value='';document.getElementById('encOut').textContent='';
-  buildTable('cipherLive','');
+  const inp=document.getElementById('encInp');
+  const out=document.getElementById('encOut');
+  const btn=document.getElementById('clearBtn');
+  const el=document.getElementById('cipherLive');
+  const rows=[...el.querySelectorAll('.cipher-row')];
+  out.style.transition='opacity .25s ease, transform .25s ease';
+  out.style.opacity='0';out.style.transform='translateY(6px)';
+  setTimeout(()=>{out.textContent='';out.style.transform='translateY(0)';},260);
+  rows.forEach(row=>{
+    [...row.querySelectorAll('.c-cell.lit')].forEach((cell,idx)=>{
+      setTimeout(()=>{
+        cell.style.transition='transform .15s ease, background .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease';
+        cell.style.transform='scale(1.35)';
+        setTimeout(()=>{cell.style.transform='scale(1)';cell.classList.remove('lit');},160);
+      },idx*30);
+    });
+  });
+  inp.value='';
+  btn.style.opacity='.25';btn.style.pointerEvents='none';
 }
-document.getElementById('encInp')?.addEventListener('keydown',e=>{if(e.key==='Enter')doEncrypt();e.stopPropagation();});
+document.getElementById('encInp')?.addEventListener('keydown',e=>{e.stopPropagation();});
+document.getElementById('encInp')?.addEventListener('input',()=>{doEncrypt();});
+
 function doHash(){
   const t=document.getElementById('hashInp').value;if(!t.trim())return;
   const clean=t.toUpperCase().replace(/[^A-Z]/g,'');
   const sum=clean.split('').reduce((a,c)=>a+(c.charCodeAt(0)-64),0);
   const hash=sum%100;
   document.getElementById('hashOut').innerHTML=
-    '<div class="hbox"><label>LETTERS</label><span>'+( clean||'—')+'</span></div>'+
+    '<div class="hbox"><label>LETTERS</label><span>'+(clean||'—')+'</span></div>'+
     '<div class="hbox"><label>SUM</label><span>'+sum+'</span></div>'+
     '<div class="hbox"><label>HASH (sum % 100)</label><span style="font-size:24px;font-weight:700">'+hash+'</span></div>';
 }
 document.getElementById('hashInp')?.addEventListener('keydown',e=>{if(e.key==='Enter')doHash();e.stopPropagation();});
+
 function quiz(gid,btn,correct){
   const grp=document.getElementById(gid);
   grp.querySelectorAll('.qopt').forEach(b=>b.disabled=true);
@@ -788,6 +890,9 @@ function quiz(gid,btn,correct){
 }
 function fcClick(n){
   for(let i=1;i<=3;i++){const el=document.getElementById('fc'+i);el.classList.remove('active-step','done-step');if(i<n)el.classList.add('done-step');if(i===n)el.classList.add('active-step');}
+  if(n===1)buildRow1('cipherDemo','');
+  if(n===2)buildRow2Keyword('cipherDemo','');
+  if(n===3)buildRow2Rest('cipherDemo','');
   if(n===3)setTimeout(()=>{for(let i=1;i<=3;i++)document.getElementById('fc'+i).classList.add('done-step');},2000);
 }
 function hfcClick(n){
@@ -801,7 +906,7 @@ function revealHash(fnId,outId){
   out.style.opacity='1';
 }
 goTo(0);
-setTimeout(()=>buildTable('cipherDemo',''),80);
+setTimeout(()=>{document.getElementById('cipherDemo').innerHTML='';},80);
 </script>
 </body>
 </html>
